@@ -82,6 +82,7 @@ def ask_user_to_locate_points(points, img):
     own = True
     
     if own ==True:
+        """
         r, c = img_.shape
         x = c * 0.1
         y = r * 0.12
@@ -91,6 +92,17 @@ def ask_user_to_locate_points(points, img):
         coords_.append((x, y))
         x = c * 0.1
         y = r * 0.55
+        coords_.append((x, y))
+        """
+        r, c = img_.shape
+        x = c * 0.2
+        y = r * 0.2
+        coords_.append((x, y))
+        x = c * 0.4
+        y = r * 0.2
+        coords_.append((x, y))
+        x = c * 0.2
+        y = r * 0.4
         coords_.append((x, y))
     else:
         cv2.namedWindow( windowName_ )
@@ -326,14 +338,14 @@ def get():
     sys.argv.append('-p 0,0')
     sys.argv.append('-p 10,0')
     sys.argv.append('-p 0,10')
-    #sys.argv.append('--plot')
+    sys.argv.append('--plot')
 
-    no_files = next(os.walk("temp/graphs"))[2]
+    no_files = next(os.walk("temp/blocks/graphs"))[2]
 
     for n, f in enumerate(no_files):
 
         global use_file, save_file
-        use_file = 'temp/graphs/' + str(n) + '.jpg'
+        use_file = 'temp/blocks/graphs/' + str(n) + '.jpg'
         save_file = 'temp/csv/' + str(n) + '.csv'
 
         main(sys.argv[:])

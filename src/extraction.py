@@ -3,28 +3,28 @@
 
 # Imports
 import tables
-import items
+import blocks
 import image_insights
 import plotdigitizer
 import graph_insights
 import graph_audio
-import OCR
+import text
 import equations
-
 import time
+
 
 def run():
 
     start = time.time()
 
     # Set true if debugging information is required
-    info = True
+    #info = True
 
     # Step 1 - Extract tables from page
-    tables.get(info)
+    #tables.get(info)
 
-    # Step 2 - Extract items (graphs and images)
-    items.get()
+    # Step 2 - Extract blocks
+    blocks.get()
 
     # Step 3 - Get insights for the images extracted
     image_insights.get()
@@ -39,7 +39,7 @@ def run():
     graph_audio.get()
 
     # Step 6 - OCR text extraction
-    OCR.get()
+    text.get()
 
     # Step 7 - Extract equations
     equations.get()
@@ -47,13 +47,6 @@ def run():
     # Step 8 - Perform NLP Content analysis
 
     
-
-    # Step 9 - Controls 
-
-
-    # Storage
-
-
     print('It took', time.time()-start, 'seconds.')
 
     return

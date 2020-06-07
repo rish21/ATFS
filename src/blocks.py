@@ -2,34 +2,34 @@ import cv2
 import numpy as np
 from PIL import Image, ImageDraw
 
-temp = 'temp/im1'
+path = 'temp/scanned'
 
 def get_graph(item):
 
     # Take a copy of the image to extract the item later
-    image = cv2.imread(temp + '.jpg', )
+    image = cv2.imread(path + '.jpg')
     original = image.copy()
     cut = original[:]
     count = 0
 
     # Dilate the image to remove the text
     dilated_img = cv2.dilate(image, np.ones((7,7), np.uint8))
-    #cv2.imwrite("temp/report/dilate.jpg", dilated_img)
+    #cv2.imwrite("temp/dilate.jpg", dilated_img)
 
     # In order to further remove any text on the page we apply smoothing
     bg_img = cv2.medianBlur(dilated_img, 21) 
-    #cv2.imwrite("temp/report/blurs.jpg", bg_img)
+    #cv2.imwrite("temp/blurs.jpg", bg_img)
 
     # Form an image that is difference between the orignal and the blurred
     diff_img = 255 - cv2.absdiff(image, bg_img)
     norm_img = diff_img.copy()
-    #cv2.imwrite("temp/report/diff.jpg", norm_img)
+    #cv2.imwrite("temp/diff.jpg", norm_img)
 
     # Normalise and truncate to bring back the dynamic range of the image and remove gray pixels
     cv2.normalize(diff_img, norm_img, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
     _, thr_img = cv2.threshold(norm_img, 255, 0, cv2.THRESH_TRUNC)
     cv2.normalize(thr_img, thr_img, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
-    #cv2.imwrite("temp/report/remove.jpg", norm_img)
+    #cv2.imwrite("temp/remove.jpg", norm_img)
 
     # Apply a grayscale and OTSU threshold
     gray = cv2.cvtColor(thr_img, cv2.COLOR_BGR2GRAY)
@@ -43,7 +43,7 @@ def get_graph(item):
     elif item == "images":
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (45,15))
         dilate = cv2.dilate(thresh, kernel, iterations=2)
-        cv2.imwrite("temp/morph.jpg", dilate)
+        #cv2.imwrite("temp/morph.jpg", dilate)
     else:
         print("ERR - Invalid call")
 
@@ -55,12 +55,12 @@ def get_graph(item):
         area = cv2.contourArea(c)
         cv2.rectangle(image, (x,y), (x + w,y + h), (36,255,12), 3)
 
-        #if cv2.contourArea(c) >= 25000:
-        cut = original[y:y+h, x:x+w]
-        cv2.imwrite("temp/breakdown/"  + str(count) + '.jpg', cut)
-        count = count + 1
+        if cv2.contourArea(c) >= 10000:
+            cut = original[y:y+h, x:x+w]
+            cv2.imwrite("temp/blocks/"  + str(count) + '.jpg', cut)
+            count = count + 1
 
-        if w/h > 2 and area > 10000:
+        if w/h > 2 and area < 10000:
             cv2.drawContours(dilate, [c], -1, (0,0,0), -1)
 
     #cv2.imwrite("temp/contour.jpg", image)
@@ -78,7 +78,8 @@ def get_graph(item):
 
     # Capture the item from the page and remove it from the original
     for sc in sort_cnts:
-        if cv2.contourArea(sc) >= 100000 and cv2.contourArea(sc) <= 7000000:
+        #if cv2.contourArea(sc) >= 100000 and cv2.contourArea(sc) <= 7000000:
+        if cv2.contourArea(sc) >= 200000 and cv2.contourArea(sc) <= 250000:
             x,y,w,h = cv2.boundingRect(sc)
             points = []
             points.append(x)
@@ -86,7 +87,7 @@ def get_graph(item):
             points.append(x + w)
             points.append(y + h)
             cut = original[y:y+h, x:x+w]
-            cv2.imwrite("temp/" + item + "/"  + str(count) + '.jpg', cut)
+            cv2.imwrite("temp/blocks/" + item + "/"  + str(count) + '.jpg', cut)
             remove_graph(points, item, count)
             count = count + 1
 
@@ -95,10 +96,10 @@ def get_graph(item):
 
 def remove_graph(points, item, count):
     
-    t = Image.open(temp + '.jpg').convert("RGB")
+    t = Image.open(path + '.jpg').convert("RGB")
     draw = ImageDraw.Draw(t)
     draw.rectangle(((points[0],points[1]), (points[2],points[3])), fill="white")
-    t.save(temp + '.jpg', "JPEG")
+    t.save(path + '.jpg', "JPEG")
 
     return
 

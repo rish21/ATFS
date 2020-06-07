@@ -13,6 +13,8 @@ import os
 
 import pylab
 
+path = 'temp/csv/'
+
 def smoothList(list):
     strippedXs=False
     degree=5
@@ -104,7 +106,7 @@ def graph_values(data):
     return x, y
 
 
-def sg_filter(x, y):
+def sg_filter(x, y, n):
 
     win_len = len(y)
     win_len = int(win_len / 5)
@@ -114,33 +116,57 @@ def sg_filter(x, y):
     fx = savgol_filter(x, win_len, 1)
     fy = savgol_filter(y, win_len, 1)
 
+    fx = np.around(fx,decimals=5)
+    fy = np.around(fx,decimals=5)
+
+    #data = np.column_stack((x.flatten(), fy.flatten()))
+    data = np.column_stack((x, fy))
+
+    np.savetxt(path + str(n) + '.csv', data, delimiter=' ', fmt='%f')
+
     return fx, fy
 
 
 def best_fit(show, x, y):
 
     rsquared = []
+    polythresh = 0.95
 
-    param, param_cov = curve_fit(ord1, x, y)
-    ord1_y = ord1(x, param[0], param[1])
-    res = y - ord1_y
-    ss_res = np.sum(res**2)
-    ss_tot = np.sum((y - np.mean(y))**2)
-    rsquared.append(1 - (ss_res / ss_tot))
+    try:
+        param, param_cov = curve_fit(ord1, x, y)
+        ord1_y = ord1(x, param[0], param[1])
+        res = y - ord1_y
+        ss_res = np.sum(res**2)
+        ss_tot = np.sum((y - np.mean(y))**2)
+        rsquared.append(1 - (ss_res / ss_tot))
+    except:
+        ord1_y = y
+        rsquared.append(0)
+        pass
 
-    param, param_cov = curve_fit(ord2, x, y)
-    ord2_y = ord2(x, param[0], param[1], param[2])
-    res = y - ord2_y
-    ss_res = np.sum(res**2)
-    ss_tot = np.sum((y - np.mean(y))**2)
-    rsquared.append(1 - (ss_res / ss_tot))
+    try:
+        param, param_cov = curve_fit(ord2, x, y)
+        ord2_y = ord2(x, param[0], param[1], param[2])
+        res = y - ord2_y
+        ss_res = np.sum(res**2)
+        ss_tot = np.sum((y - np.mean(y))**2)
+        rsquared.append(1 - (ss_res / ss_tot))
+    except:
+        ord2_y = y
+        rsquared.append(0)
+        pass
 
-    param, param_cov = curve_fit(ord3, x, y)
-    ord3_y = ord3(x, param[0], param[1], param[2], param[3])
-    res = y - ord3_y
-    ss_res = np.sum(res**2)
-    ss_tot = np.sum((y - np.mean(y))**2)
-    rsquared.append(1 - (ss_res / ss_tot))
+    try:
+        param, param_cov = curve_fit(ord3, x, y)
+        ord3_y = ord3(x, param[0], param[1], param[2], param[3])
+        res = y - ord3_y
+        ss_res = np.sum(res**2)
+        ss_tot = np.sum((y - np.mean(y))**2)
+        rsquared.append(1 - (ss_res / ss_tot))
+    except:
+        ord3_y = y
+        rsquared.append(0)
+        pass
     
     try:
         param, param_cov = curve_fit(expo, x, y)
@@ -151,47 +177,81 @@ def best_fit(show, x, y):
         rsquared.append(1 - (ss_res / ss_tot))
     except:
         expo_y = y
+        rsquared.append(0)
         pass
 
-    param, param_cov = curve_fit(loga, x, y)
-    loga_y = loga(x, param[0], param[1])
-    res = y - loga_y
-    ss_res = np.sum(res**2)
-    ss_tot = np.sum((y - np.mean(y))**2)
-    rsquared.append(1 - (ss_res / ss_tot))
+    try:
+        param, param_cov = curve_fit(loga, x, y)
+        loga_y = loga(x, param[0], param[1])
+        res = y - loga_y
+        ss_res = np.sum(res**2)
+        ss_tot = np.sum((y - np.mean(y))**2)
+        rsquared.append(1 - (ss_res / ss_tot))
+    except:
+        loga_y = y
+        rsquared.append(0)
+        pass
 
-    param, param_cov = curve_fit(sinfn, x, y)
-    sinfn_y = sinfn(x, param[0], param[1])
-    res = y - sinfn_y
-    ss_res = np.sum(res**2)
-    ss_tot = np.sum((y - np.mean(y))**2)
-    rsquared.append(1 - (ss_res / ss_tot))
+    try:
+        param, param_cov = curve_fit(sinfn, x, y)
+        sinfn_y = sinfn(x, param[0], param[1])
+        res = y - sinfn_y
+        ss_res = np.sum(res**2)
+        ss_tot = np.sum((y - np.mean(y))**2)
+        rsquared.append(1 - (ss_res / ss_tot))
+    except:
+        sinfn_y = y
+        rsquared.append(0)
+        pass
 
-    param, param_cov = curve_fit(cosfn, x, y)
-    cosfn_y = cosfn(x, param[0], param[1])
-    res = y - cosfn_y
-    ss_res = np.sum(res**2)
-    ss_tot = np.sum((y - np.mean(y))**2)
-    rsquared.append(1 - (ss_res / ss_tot))
+    try:
+        param, param_cov = curve_fit(cosfn, x, y)
+        cosfn_y = cosfn(x, param[0], param[1])
+        res = y - cosfn_y
+        ss_res = np.sum(res**2)
+        ss_tot = np.sum((y - np.mean(y))**2)
+        rsquared.append(1 - (ss_res / ss_tot))
+    except:
+        cosfn_y = y
+        rsquared.append(0)
+        pass
 
-    param, param_cov = curve_fit(tanfn, x, y)
-    tanfn_y = tanfn(x, param[0], param[1])
-    res = y - tanfn_y
-    ss_res = np.sum(res**2)
-    ss_tot = np.sum((y - np.mean(y))**2)
-    rsquared.append(1 - (ss_res / ss_tot))
+    try:
+        param, param_cov = curve_fit(tanfn, x, y)
+        tanfn_y = tanfn(x, param[0], param[1])
+        res = y - tanfn_y
+        ss_res = np.sum(res**2)
+        ss_tot = np.sum((y - np.mean(y))**2)
+        rsquared.append(1 - (ss_res / ss_tot))
+    except:
+        tanfn_y = y
+        rsquared.append(0)
+        pass
 
     i, max_val = max(enumerate(rsquared), key=operator.itemgetter(1))
 
+    # Cubic adjustment
+    if i == 2 and max_val >= polythresh:
+        if rsquared[1] >= polythresh:
+            if rsquared[0] >= polythresh:
+                i = 0
+            else:
+                i = 1
+
+    # Quadratic adjustment
+    if i == 1 and max_val >= polythresh:
+        if rsquared[0] >= polythresh:
+            i = 0
+
     if show == True:
         plt.plot(x, ord1_y, '-', color ='C2', label ="Linear")
-        #plt.plot(x, ord2_y, '-', color ='C3', label ="Quadratic")
-        #plt.plot(x, ord3_y, '-', color ='C4', label ="Cubic")
+        plt.plot(x, ord2_y, '-', color ='C3', label ="Quadratic")
+        plt.plot(x, ord3_y, '-', color ='C4', label ="Cubic")
         plt.plot(x, expo_y, '-', color ='C5', label ="Exponential")
-        #plt.plot(x, loga_y, '-', color ='C6', label ="Log")
+        plt.plot(x, loga_y, '-', color ='C6', label ="Log")
         plt.plot(x, sinfn_y, '-', color ='C7', label ="Sine")
-        #plt.plot(x, cosfn_y, '-', color ='C8', label ="Cosine")
-        #plt.plot(x, tanfn_y, '-', color ='C9', label ="Tangent")
+        plt.plot(x, cosfn_y, '-', color ='C8', label ="Cosine")
+        plt.plot(x, tanfn_y, '-', color ='C9', label ="Tangent")
         plt.legend() 
         plt.show() 
 
@@ -201,7 +261,7 @@ def best_fit(show, x, y):
 def store_json(results):
 
     #store = ["First order polynomial","Second order polynomial","Third order polynomial","Exponential cruve","Logarithmic curve","Sine function","Cosine function","Tangent function"]
-    store = ["First order polynomial","Second order polynomial","Third order polynomial","Logarithmic curve","Sine function","Cosine function","Tangent function"]
+    store = ["Linear function","Quadratic function","Cubic function","Exponential function","Logarithmic function","Sine function","Cosine function","Tangent function"]
 
     with open('temp/access.JSON', 'r') as f:
         data = dict(json.load(f))
@@ -222,51 +282,43 @@ def get():
     print("pkg_GRAPH_INSIGHTS - Getting insights for graphs")
 
     results = []
-    path = 'temp/csv/'
     no_files = next(os.walk("temp/csv"))[2]
 
-    #try:
-    for n, f in enumerate(no_files):
+    try:
+        for n, f in enumerate(no_files):
 
-        filePath = path + str(n) + '.csv'
+            filePath = path + str(n) + '.csv'
 
-        with open(filePath, newline='') as csvfile:
-            im = csv.reader(csvfile, delimiter=' ', quotechar='|')
-            data = list(im)
+            with open(filePath, newline='') as csvfile:
+                im = csv.reader(csvfile, delimiter=' ', quotechar='|')
+                data = list(im)
 
-        valx, valy = graph_values(data)
+            valx, valy = graph_values(data)
+            #plt.plot(valx, valy, 'o', color ='C0', label ="Raw Data", markersize=2) 
 
-        plt.plot(valx, valy, 'o', color ='C0', label ="Raw Data", markersize=2) 
+            x, y = sg_filter(valx, valy, n)
+            #plt.plot(x, y, 'o', color ='C1', label ="Savgol Filter", markersize=2) 
+            
+            """
+            y = smoothList(valy)
+            plt.plot(x[:len(y)], y, 'o', color ='C2', label ="Average Filter", markersize=2) 
 
-        x, y = sg_filter(valx, valy)
-        """
+            y = smoothListTriangle(valy)
+            plt.plot(x[:len(y)], y, 'o', color ='C3', label ="Triangle Filter", markersize=2) 
 
-        plt.plot(x, y, 'o', color ='C1', label ="Savgol Filter", markersize=2) 
-        
-        y = smoothList(valy)
+            y = smoothListGaussian(valy)
+            plt.plot(x[:len(y)], y, 'o', color ='C4', label ="Gaussian Filter", markersize=2) 
+            """
+            
+            #plt.legend() 
+            #plt.show() 
 
-        plt.plot(x[:len(y)], y, 'o', color ='C2', label ="Average Filter", markersize=2) 
+            results.append(best_fit(False, x, valy))
+                    
+        store_json(results)
 
-        y = smoothListTriangle(valy)
-
-        plt.plot(x[:len(y)], y, 'o', color ='C3', label ="Triangle Filter", markersize=2) 
-
-        y = smoothListGaussian(valy)
-
-        plt.plot(x[:len(y)], y, 'o', color ='C4', label ="Gaussian Filter", markersize=2) 
-        """
-        
-        plt.legend() 
-        plt.show() 
-        
-
-        results.append(best_fit(False, valx, y))
-        #results.append(best_fit(True, valx, valy))
-                
-    store_json(results)
-
-    #except:
-    #    print("ERR - Invalid file")
+    except:
+        print("ERR - Invalid file")
 
 
 if __name__ == '__main__':

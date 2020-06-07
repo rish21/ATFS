@@ -10,6 +10,7 @@ from scipy.signal import savgol_filter
 import numpy as np 
 import os
 
+path = 'temp/csv/'
 
 def graph_values(data):
 
@@ -24,19 +25,6 @@ def graph_values(data):
     y = np.array(vy, dtype=np.float128)
 
     return x, y
-
-
-def sg_filter(x, y):
-
-    win_len = len(y)
-    win_len = int(win_len / 3)
-    if (win_len % 2) == 0:
-        win_len = win_len -1
-
-    fx = savgol_filter(x, win_len, 2)
-    fy = savgol_filter(y, win_len, 2)
-
-    return fx, fy
 
 
 def graph_audio_values(x, y):
@@ -75,7 +63,7 @@ def graph_audio_values(x, y):
     return valx, valy, ragx, ragy
 
 
-def graph_audio(valx, valy, maxx, maxy):
+def graph_audio(valx, valy, maxx, maxy, n):
 
     synth = chippy.Synthesizer(framerate=44100)
     once = False
@@ -84,36 +72,35 @@ def graph_audio(valx, valy, maxx, maxy):
     fp = 2000 * (float(valx[0]) / float(maxx))
     ap = 1 * (float(valy[0]) / float(maxy))
     sine_wave = synth.sine_pcm(length=1, frequency=fp, amplitude=ap)
-    synth.save_wave(sine_wave, loc + "temp_p.wav")
+    synth.save_wave(sine_wave, loc + "temp_p"  + str(n) + ".wav")
 
     for v in range(1, len(valx) - 1):
 
         fn = 2000 * (float(valx[v]) / float(maxx))
         an = 20 * (float(valy[v]) / float(maxy))
         sine_wave = synth.sine_pcm(length=0.1, frequency=fn, amplitude=an)
-        synth.save_wave(sine_wave, loc + "temp_n.wav")
+        synth.save_wave(sine_wave, loc + "temp_n" + str(n) + ".wav")
 
         if once == False:
-            temp_prev = AudioSegment.from_wav(loc + "temp_p.wav")
-            temp_next = AudioSegment.from_wav(loc + "temp_n.wav")
+            temp_prev = AudioSegment.from_wav(loc + "temp_p"  + str(n) + ".wav")
+            temp_next = AudioSegment.from_wav(loc + "temp_n" + str(n) + ".wav")
 
             combined_sounds = temp_prev + temp_next
-            combined_sounds.export(loc + "final.wav", format="wav")
+            combined_sounds.export(loc + "final"  + str(n) + ".wav", format="wav")
             once = True
         else:
-            temp_prev = AudioSegment.from_wav(loc + "final.wav")
-            temp_next = AudioSegment.from_wav(loc + "temp_n.wav")
+            temp_prev = AudioSegment.from_wav(loc + "final"  + str(n) + ".wav")
+            temp_next = AudioSegment.from_wav(loc + "temp_n" + str(n) + ".wav")
 
             combined_sounds = temp_prev + temp_next
-            combined_sounds.export(loc + "final.wav", format="wav")
+            combined_sounds.export(loc + "final"  + str(n) + ".wav", format="wav")
 
 
 def get():
 
     print("pkg_GRAPH_AUDIO - Synthesising audio for the graph data")
 
-    path = 'temp/csv/'
-    no_files = next(os.walk("temp/csv"))[2]
+    no_files = next(os.walk(path))[2]
 
     try:
         for n, f in enumerate(no_files):
@@ -126,11 +113,9 @@ def get():
 
             valx, valy = graph_values(data)
 
-            x, y = sg_filter(valx, valy)
+            vx, vy, ragx, ragy = graph_audio_values(valx, valy)
 
-            valx, valy, ragx, ragy = graph_audio_values(x, y)
-
-            graph_audio(valx, valy, ragx, ragy)
+            graph_audio(vx, vy, ragx, ragy, n)
 
     except:
         print("ERR - Invalid file")

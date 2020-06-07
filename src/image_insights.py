@@ -9,15 +9,14 @@ from bs4 import BeautifulSoup
 import os
 import json
 
+path = 'temp/blocks/images/'
 
 def get():
 
     print("pkg_IMAGE_INSIGHTS - Getting insights for detected images")
 
     results=[]
-    path = 'temp/images/'
-    no_files = next(os.walk("temp/images"))[2]
-
+    no_files = next(os.walk(path))[2]
 
     for n, f in enumerate(no_files):
         

@@ -10,6 +10,7 @@ import json
 idd = 'rmanjunatha2198_gmail_com_79187c'
 key = '859985511757a53ddc2b'
 
+path = 'temp/blocks/'
 
 def process(filePath):
 
@@ -45,8 +46,7 @@ def get():
     print("pkg_Equations - Extracting equations images")
 
     results = []
-    path = 'temp/breakdown/'
-    no_files = next(os.walk("temp/csv"))[2]
+    no_files = next(os.walk(path))[2]
 
     try:
         for n, f in enumerate(no_files):

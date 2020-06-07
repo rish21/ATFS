@@ -14,8 +14,8 @@ def get(info):
     print("pkg_TABLES - Extracting tables")
 
     # Request for the tables from the page to be extracted and stored
-    pro_tables = read_pdf('temp/1.jpg', flavor="CamelotPro", pro_kwargs={'api_key': api_key}) 
-    pro_tables.export('temp/temp.csv', f='csv')
+    pro_tables = read_pdf('temp/scanned.jpg', flavor="CamelotPro", pro_kwargs={'api_key': api_key}) 
+    pro_tables.export('temp/csv/tables.csv', f='csv')
 
     # Print out request information
     if info == True:

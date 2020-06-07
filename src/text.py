@@ -12,6 +12,7 @@ import csv
 import pytesseract
 #from pylanguagetool import api
 
+path = 'temp/scanned'
 
 def tess_detect(img):
 
@@ -35,7 +36,7 @@ def boxes_char(img):
         img = cv2.rectangle(img, (int(b[1]), h - int(b[2])), (int(b[3]), h - int(b[4])), (0, 255, 0), 2)
 
     #cv2.imshow('letters', img)
-    cv2.imwrite('temp/letter.jpg', img)
+    cv2.imwrite('temp/letters.jpg', img)
     cv2.waitKey(0)
 
 
@@ -94,7 +95,7 @@ def store_json(store, check, data):
         elif c == "" and c == " ":
             pass
         else:
-            data["page"][0]["sections"].append({"full_text": "","description":"","notes":"","notes":[],""sentences": []})
+            data["page"][0]["sections"].append({"full_text": "","nlp":[],"sentences": []})
             c = re.sub('\n', ' ', c)
             data["page"][0]["sections"][A]["full_text"] = c
             sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', c)
@@ -115,7 +116,7 @@ def check_table():
     check = False
 
     try:
-        with open('temp/temp-page-1-table-1.csv', newline='') as csvfile:
+        with open('temp/scanned-page-1-table-1.csv', newline='') as csvfile:
             im = csv.reader(csvfile, delimiter=' ', quotechar='|')
             tables = list(im)
 
@@ -136,17 +137,15 @@ def get():
 
     print("pkg_OCR - Extracting text from page")
 
-    image_path = 'temp/3.jpg'
     global img
-    img = cv2.imread(image_path, cv2.IMREAD_COLOR)
+    img = cv2.imread(path + '.jpg', cv2.IMREAD_COLOR)
 
     text = tess_detect(img)
+    #boxes_char(img)
     #boxes_words(img)
     check, data = check_table()
     #store = correct(text)
     store_json(text, check, data)
-
-
 
     return
 
