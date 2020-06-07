@@ -1,0 +1,14 @@
+{
+    "main_001": "Hi there, please wait one moment while the system starts up",
+    "main_002": "Press start to begin scanning a new page, or press Y to access stored material",
+    "main_003": "To start analysing the page press A",
+    "scanner_001": "The page has been found, please hold steady",
+    "scanner_002": "The page has been captured successfully",
+    "scanner_003": "Try to bring the device closer to the page",
+    "scanner_004": "Try to hold the device steady",
+    "extraction_001": "Please wait while the extraction begins, this can take up to 2 mins",
+    "extraction_002": "If you would like to study, the text, please press A",
+    "extraction_003": "If you would like to study, the graph, please press X",
+    "extraction_004": "If you would like to study, the equations, please press Y",
+    "extraction_005": "If you would like to study, the tables, please press A"
+}
