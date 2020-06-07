@@ -3,8 +3,19 @@
         {
             "identity": "",
             "bookmarked": "",
-            "notes":[
-            ],
+            "description": "",
+            "notes": {
+                "text": [
+                ],
+                "images": [
+                ],
+                "graphs": [
+                ],
+                "tables": [
+                ],
+                "equations": [
+                ]
+            },
             "image_results": [
 
             ],
