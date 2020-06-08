@@ -269,7 +269,6 @@ def store_json(results):
     for n, r in enumerate(results):
         data["page"][0]["graph_results"].append({n:""})
         data["page"][0]["graph_results"][n][n] = store[results[n]]
-        print(store[results[n]])
 
     with open('temp/access.JSON', 'w') as n:
         json.dump(data, n, indent=4, sort_keys=False)

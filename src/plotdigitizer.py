@@ -338,7 +338,7 @@ def get():
     sys.argv.append('-p 0,0')
     sys.argv.append('-p 10,0')
     sys.argv.append('-p 0,10')
-    sys.argv.append('--plot')
+    #sys.argv.append('--plot')
 
     no_files = next(os.walk("temp/blocks/graphs"))[2]
 
