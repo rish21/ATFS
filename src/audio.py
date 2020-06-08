@@ -21,7 +21,7 @@ def go(det, value):
     else: 
         print("ERR - Invalid call")
 
-    return script
+    return
 
 # Play audio file to speakers
 def play(file):
