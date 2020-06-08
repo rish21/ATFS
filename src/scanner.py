@@ -12,6 +12,7 @@ from multiprocessing import Process
 def run():
 
     print("pkg_SCANNER - Scanning Page")
+    start = time.time()
     
     #cap = cv2.VideoCapture(0)
     cap = cv2.VideoCapture('temp/feed.mp4')
@@ -139,10 +140,18 @@ def run():
         # Close all windows with any keyboard press
         if cv2.waitKey(1) & 0xFF == ord('c'):
             cv2.destroyAllWindows()
-            cont = False
-
+            cap.release()
+            return False
+        
+        if time.time() - start >= 30:
+            audio.go("key", "scanner_005")
+            print(time.time() - start)
+            cap.release()
+            return False
+        
     cap.release()
-    return
+    
+    return True
 
 
 def show(frame, edge, threshold, image, identified_page, baw):
