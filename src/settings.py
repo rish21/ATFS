@@ -13,7 +13,7 @@ import stot
 # Controller Callback
 def CallBackA(controlId, value):
 
-    global back, select, pointer_ud, pointer_lr, swap, ignore, a_window, a_gender, a_speakrate
+    global back, select, pointer_ud, pointer_lr, swap, a_window, a_gender, a_speakrate
 
     # Window (A)
     if controlId == 6 and value == 0:
@@ -27,8 +27,9 @@ def CallBackA(controlId, value):
     if controlId == 7 and value == 0:
        a_speakrate = True
 
-    # Images (Y)
+    # (Y)
     if controlId == 9 and value == 0:
+        print("Y")
 
     # DPad
     if controlId == 17:
@@ -54,8 +55,9 @@ def CallBackA(controlId, value):
         print("BACK")
         back = True
 
-    # Add Notes (XBOX)
+    # (XBOX)
     if controlId == 8 and value == 0:
+        print("Xbox")
 
     return
 

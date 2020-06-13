@@ -10,7 +10,6 @@ import operator
 import csv
 import json
 import os
-
 import pylab
 
 path = 'temp/csv/'
