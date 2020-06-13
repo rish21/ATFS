@@ -33,14 +33,14 @@ def ssml_to_speech(ssml_text):
 
     # Determine the encoding
     audio_config = texttospeech.types.AudioConfig(
-        audio_encoding=texttospeech.enums.AudioEncoding.MP3)
+        audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16)
 
     # Request for text to speech conversion
     response = client.synthesize_speech(synthesis_input, voice, audio_config)
 
     # Write the results to a temporary file
     try:
-        with open("temp/ttos.mp3", 'wb') as out:
+        with open("temp/audio/ttos.wav", 'wb') as out:
             out.write(response.audio_content)
     except:
         print("ERR - SSML failed to write to file")
@@ -48,31 +48,97 @@ def ssml_to_speech(ssml_text):
     return
 
 
-def text_to_ssml(input_text):
+def text_to_ssml(input_text, equ):
 
     print("pkg_TtoS - Converting text to SSML")
 
-    # Replace special characters with HTML Ampersand Character Codes to prevent the API failing
-    escaped_lines = html.escape(input_text)
+    convert = html.escape(input_text)
 
-    # Convert text attributes to SSML
-    ssml_text = '<speak>{}</speak>'.format(
-        escaped_lines.replace('\n', '\n<break time="2s"/>'))
+    if equ == True:
+        
+        # Greek Letters
+        convert = convert.replace('\varepsilon', 'epsilon')
+        convert = convert.replace('\vartheta', 'theta')
+        convert = convert.replace('\mu', 'mew')
+        convert = convert.replace('\nu', 'new')
+        convert = convert.replace('\\xi', 'sigh')
+        convert = convert.replace('\varrho', 'rho')
+        convert = convert.replace('\varphi', 'phi')
 
-    # Return the concatenated string of ssml script
+        # Other Symbols
+        convert = convert.replace('\infty', 'infinity')
+        convert = convert.replace('\Re', 'real')
+        convert = convert.replace('\nabla', 'differential')
+        convert = convert.replace('\mu', 'mew')
+        convert = convert.replace('\neg', 'negative')
+        convert = convert.replace('\Im', 'imaginary')
+        convert = convert.replace('\nexists', 'does not exist')
+        convert = convert.replace('\varnothing', 'nothing')
+        convert = convert.replace('\cdots', ' and so on ')
+        convert = convert.replace('\surd', 'square root of')
+        convert = convert.replace('\angle', 'an angle of')
+
+        # Operations
+        convert = convert.replace('\div', 'divided by') 
+        convert = convert.replace('\cup', 'union')
+        convert = convert.replace('\cap', 'intersection')
+        convert = convert.replace('\subset', 'is a proper subset of')
+        convert = convert.replace('\not\subset', 'is not a proper subset of')
+        convert = convert.replace('\subseteq', 'is a subset of')
+        convert = convert.replace('\nsubseteq', 'is not a subset of')
+        convert = convert.replace('\supset', 'is a proper super of')
+        convert = convert.replace('\not\supset', 'is not a proper super of')
+        convert = convert.replace('\supseteq', 'is a super of')
+        convert = convert.replace('\nsupseteq', 'is not a super of')
+
+        convert = convert.replace('\neq', 'is not equal to')
+        convert = convert.replace('\ne', ' is not equal to')
+        convert = convert.replace('\nless', 'is not less than')
+        convert = convert.replace('\leqslant', 'is less than or equal to')
+        convert = convert.replace('\nleq', 'is neither less than or equal to')
+        convert = convert.replace('\nleqslant', 'is neither less than or equal to')
+        convert = convert.replace('\geq', 'greater than or equal to')
+        convert = convert.replace('\gtr', ' is not greater than')
+        convert = convert.replace('\ngtr', 'is not greater than')
+        convert = convert.replace('\geqslant', 'is greater than or equal to')
+        convert = convert.replace('\ngeq', 'is neither greater than or equal to')
+        convert = convert.replace('\ngeqslant', 'is neither greater than or equal to')
+
+        convert = convert.replace('\in', 'belongs to')
+        convert = convert.replace('\perp', ' is perpendicular to')
+        convert = convert.replace('\notin', 'does not belong to')
+        convert = convert.replace('\simeq', 'is similarly equal to')
+        convert = convert.replace('\sim', 'is similar to')
+        convert = convert.replace('\approx', 'is approximately equal to')
+        convert = convert.replace('\equiv', 'is equivalent to')
+        convert = convert.replace('\cong', 'is congruent to')
+        convert = convert.replace('\propto', 'is proportional to')
+
+        convert = convert.replace('\sinh', 'sine')
+        convert = convert.replace('\cosh', 'cosine')
+        convert = convert.replace('\tanh', 'cosine')
+
+        convert = convert.replace('\int', 'the integral of')
+        convert = convert.replace('\sum', 'the sum of')
+        convert = convert.replace('\prod', 'the product of')
+        convert = convert.replace('\lim_', 'with a lower limit of')
+        convert = convert.replace('_{', 'with a lower limit of')
+        
+
+    ssml_text = '<speak>{}</speak>'.format(convert)
+
     return ssml_text
 
 
-def go(input_text):
+def go(input_text, equ):
 
-    ssml_text = text_to_ssml(input_text)
+    ssml_text = text_to_ssml(input_text, equ)
     ssml_to_speech(ssml_text)
 
-    return
+    return 
 
 
 if __name__ == '__main__':
 
     random = "Hello there, I want to see if this works"
-    print(random)
-    go(random)
+    go(random, False)
