@@ -3,39 +3,128 @@
         {
             "identity": "",
             "bookmarked": "",
+            "description": "",
+            "notes": [
+                {
+                    "0": "I like mangos"
+                },
+                {
+                    "1": "Alright sick note"
+                }
+            ],
             "image_results": [
                 {
-                    "0": ""
+                    "0": "screenshot"
                 }
             ],
             "graph_results": [
                 {
-                    "0": ""
+                    "0": "Quadratic Function"
                 }
             ],
             "equations": [
                 {
-                    "0": ""
+                    "0": "\\left. \\begin{array} { l } { \\text { pendent and act as the second line of defense. It } } \\\\ { \\text { d to, evaluates and analyses such risks, and mitis } } \\end{array} \\right."
                 }
             ],
-            "sections": [
+            "text": [
                 {
-                    "full_text": "",
-                    "description": "",
-                    "notes": "",
-                    "nlp": [
-                        {
-                            "0": ""
-                        }
-                    ],
+                    "full_text": "and changes done and implemented in the working prototype our project should be ready to transition from the prototype to the final Stage-Gate phase [3] - Full production & Market Launch.",
+                    "nlp": [],
                     "sentences": [
                         {
-                            "text": "",
+                            "text": "and changes done and implemented in the working prototype our project should be ready to transition from the prototype to the final Stage-Gate phase [3] - Full production & Market Launch.",
                             "highlighted": ""
                         }
                     ]
-            }
-
+                },
+                {
+                    "full_text": "3 Project Communication",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "3 Project Communication",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "3.1 Team Organogram",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "3.1 Team Organogram",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "Figure 1: Team Organogram for the Angelo Pill Dispenser Project team",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "Figure 1: Team Organogram for the Angelo Pill Dispenser Project team",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "The team consists of four sub-teams: accounting team, product design team, software de- velopment team and risk management team.",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "The team consists of four sub-teams: accounting team, product design team, software de- velopment team and risk management team.",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "The project is divided up into parts for different sub-teams, and it is important that there is a central point for each sub-team to return to; conflicts can be identified while work from sub-teams is being put together, which also forms the responsibility of the project manager.",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "The project is divided up into parts for different sub-teams, and it is important that there is a central point for each sub-team to return to; conflicts can be identified while work from sub-teams is being put together, which also forms the responsibility of the project manager.",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "Project manager supervises that work for each sub-team is being carried out on time and to budget. Each sub-team reports to the project manager, apart from the independent risk management team. In order to identify problems at an early stage and ensure that mutual understanding of goals is achieved, report frequency is high and reports are usually very detailed for this project.",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "Project manager supervises that work for each sub-team is being carried out on time and to budget.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "Each sub-team reports to the project manager, apart from the independent risk management team.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "In order to identify problems at an early stage and ensure that mutual understanding of goals is achieved, report frequency is high and reports are usually very detailed for this project.",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "Risk management team is independent and act as the second line of defense. It detects the risks that the project is exposed to, evaluates and analyses such risks, and mitigates them.",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "Risk management team is independent and act as the second line of defense.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "It detects the risks that the project is exposed to, evaluates and analyses such risks, and mitigates them.",
+                            "highlighted": ""
+                        }
+                    ]
+                }
+            ],
+            "misc": [
+                {
+                    "0": 85
+                }
             ]
         }
     ]

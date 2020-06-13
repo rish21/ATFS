@@ -4,18 +4,8 @@
             "identity": "",
             "bookmarked": "",
             "description": "",
-            "notes": {
-                "text": [
-                ],
-                "images": [
-                ],
-                "graphs": [
-                ],
-                "tables": [
-                ],
-                "equations": [
-                ]
-            },
+            "notes": [
+            ],
             "image_results": [
 
             ],
@@ -25,7 +15,10 @@
             "equations": [
 
             ],
-            "sections": [
+            "text": [
+                
+            ],
+            "misc": [
                 
             ]
         }
