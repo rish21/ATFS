@@ -9,6 +9,8 @@ from pydub import AudioSegment
 from scipy.signal import savgol_filter
 import numpy as np 
 import os
+import audio
+import json
 
 path = 'temp/csv/'
 
@@ -27,7 +29,7 @@ def graph_values(data):
     return x, y
 
 
-def graph_audio_values(x, y):
+def graph_audio_values(x, y, fn):
 
     valx, valy = [], []
 
@@ -60,10 +62,41 @@ def graph_audio_values(x, y):
             done = True
             pass
     
+    store_json(len(valx), fn)
+
     return valx, valy, ragx, ragy
 
 
-def graph_audio(valx, valy, maxx, maxy, n):
+def store_json(insert, n):
+
+    with open('temp/access.JSON', 'r') as f:
+        data = dict(json.load(f))
+
+        data["page"][0]["misc"].append({n:""})
+        data["page"][0]["misc"][n][n] = insert
+
+    with open('temp/access.JSON', 'w') as n:
+        json.dump(data, n, indent=4, sort_keys=False)
+
+    return
+
+
+def graph_audio_point(valx, valy, maxx, maxy, p, n):
+
+    synth = chippy.Synthesizer(framerate=44100)
+    loc = "temp/audio/"
+
+    fp = 2000 * (float(valx[p]) / float(maxx))
+    ap = 1 * (float(valy[p]) / float(maxy))
+    sine_wave = synth.sine_pcm(length=1, frequency=fp, amplitude=ap)
+    synth.save_wave(sine_wave, loc + "temp_s"  + str(n) + ".wav")
+
+    audio.play( loc + "temp_s"  + str(n) + ".wav")
+
+    return 
+
+
+def graph_audio_full(valx, valy, maxx, maxy, n):
 
     synth = chippy.Synthesizer(framerate=44100)
     once = False
@@ -96,31 +129,35 @@ def graph_audio(valx, valy, maxx, maxy, n):
             combined_sounds.export(loc + "final"  + str(n) + ".wav", format="wav")
 
 
-def get():
+def get(select, p):
 
     print("pkg_GRAPH_AUDIO - Synthesising audio for the graph data")
 
     no_files = next(os.walk(path))[2]
 
-    try:
-        for n, f in enumerate(no_files):
+    #try:
+    for n, f in enumerate(no_files):
 
-            filePath = path + str(n) + '.csv'
+        filePath = path + str(n) + '.csv'
 
-            with open(filePath, newline='') as csvfile:
-                im = csv.reader(csvfile, delimiter=' ', quotechar='|')
-                data = list(im)
+        with open(filePath, newline='') as csvfile:
+            im = csv.reader(csvfile, delimiter=' ', quotechar='|')
+            data = list(im)
 
-            valx, valy = graph_values(data)
+        valx, valy = graph_values(data)
 
-            vx, vy, ragx, ragy = graph_audio_values(valx, valy)
+        vx, vy, ragx, ragy = graph_audio_values(valx, valy, n)
 
-            graph_audio(vx, vy, ragx, ragy, n)
+        if select == 0:
+            graph_audio_full(vx, vy, ragx, ragy, n)
+        elif select == 1:
+            graph_audio_point(vx, vy, ragx, ragy, p, n)
 
-    except:
-        print("ERR - Invalid file")
+    #except:
+    #    print("ERR - Invalid file")
 
 
 if __name__ == '__main__': 
 
-    get()
+    p = 0
+    get(0, p)
