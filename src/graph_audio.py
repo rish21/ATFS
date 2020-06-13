@@ -31,6 +31,9 @@ def graph_values(data):
 
 def graph_audio_values(x, y, fn):
 
+    with open('temp/access.JSON', 'r') as f:
+        data = dict(json.load(f))
+
     valx, valy = [], []
 
     maxx = x[0]
@@ -57,7 +60,7 @@ def graph_audio_values(x, y, fn):
         try:
             valx.append(x[counter])
             valy.append(y[counter])
-            counter = counter + 2
+            counter = counter + int(data["settings"][0]["window"])
         except:
             done = True
             pass

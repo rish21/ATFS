@@ -127,5 +127,13 @@
                 }
             ]
         }
+    ],
+    "settings" : [
+        {
+            "window" : "3",
+            "gender" : "male",
+            "speaking_rate" :"1.2"
+        }
+
     ]
 }

@@ -4,6 +4,7 @@
 # Imports
 import html
 import os
+import json
 from google.cloud import texttospeech
 
 # Additional setup for presentation purposes
@@ -26,13 +27,26 @@ def ssml_to_speech(ssml_text):
     synthesis_input = texttospeech.types.SynthesisInput(ssml=ssml_text)
 
     # Configure the voice request (Language, Gender and Voice Type)
-    voice = texttospeech.types.VoiceSelectionParams(
-        language_code='en-GB',
-        ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE,
-        name='en-GB-Wavenet-C')
+    with open('temp/access.JSON', 'r') as f:
+        data = dict(json.load(f))
+
+    gender = data["settings"][0]["gender"]
+    print(data["settings"][0]["speaking_rate"])
+
+    if gender == "mail" or gender == "male":
+        voice = texttospeech.types.VoiceSelectionParams(
+            language_code='en-GB',
+            ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE,
+            name='en-GB-Wavenet-C')
+    else:
+        voice = texttospeech.types.VoiceSelectionParams(
+            language_code='en-GB',
+            ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE,
+            name='en-GB-Wavenet-C')
 
     # Determine the encoding
     audio_config = texttospeech.types.AudioConfig(
+        speaking_rate=float(data["settings"][0]["speaking_rate"]),
         audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16)
 
     # Request for text to speech conversion

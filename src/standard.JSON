@@ -22,5 +22,13 @@
                 
             ]
         }
+    ],
+    "settings" : [
+        {
+            "window" : "",
+            "gender" : "",
+            "speaking_rate" :""
+        }
+
     ]
 }

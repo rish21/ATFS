@@ -10,6 +10,8 @@ import time
 import graph_audio
 import os
 import stot
+import settings
+import concurrent.futures
 
 
 # Controller Callback
@@ -44,8 +46,11 @@ def CallBackA(controlId, value):
             select = True
         print("Lshoulder")
     
-    # Load old document (Rshoulder)
+    # Shoulder (Rshoulder)
     if controlId == 11 and value == 0:
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(settings.begin,)
+        audio.go("key", "access_008")
         print("Rshoulder")
 
     # DPad
