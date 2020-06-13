@@ -12,6 +12,7 @@ import text
 import equations
 import time
 import audio
+import nlp
 
 
 def run():
@@ -65,7 +66,10 @@ def run():
         print('Equations - It took', time.time()-start, 'seconds.')
         start = time.time()
 
-        # Step 8 - Perform NLP Content analysis
+        # Step 8 - Perform NLP analysis - summarisation
+        nlp.summ()
+        print('Summarisation - It took', time.time()-start, 'seconds.')
+        start = time.time()
 
     except:
         #audio.go("key", "extraction_004")

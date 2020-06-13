@@ -86,8 +86,11 @@ def store_json(store, check, data):
 
     with open('temp/access.JSON', 'r') as f:
         data = dict(json.load(f))
-        
+
+    desc = store.replace('\n',' ')
     store = re.split('\n\n', store)
+
+    data["page"][0]["description"] = desc
 
     for A,  c in enumerate(store):
         if check == True and c == data:

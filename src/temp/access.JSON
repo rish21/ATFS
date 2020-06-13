@@ -3,7 +3,7 @@
         {
             "identity": "",
             "bookmarked": "",
-            "description": "",
+            "description": "In order to identify problems at an early stage and ensure that mutualunderstanding of goals is achieved, report frequency is high and reports are usually verydetailed for this project.Risk management team is independent and act as the second line of defense.\nIt detects therisks that the project is exposed to, evaluates and analyses such risks, and mitigates them.",
             "notes": [
                 {
                     "0": "I like mangos"
@@ -128,12 +128,11 @@
             ]
         }
     ],
-    "settings" : [
+    "settings": [
         {
-            "window" : "3",
-            "gender" : "male",
-            "speaking_rate" :"1.2"
+            "window": "3",
+            "gender": "male",
+            "speaking_rate": "1.2"
         }
-
     ]
 }
