@@ -12,12 +12,12 @@ def go(det, value):
         with open('script.JSON', 'r') as f:
             script = dict(json.load(f))
             ttos.go(script[value])
-            play("temp/ttos.mp3")
+            play("temp/audio/ttos.wav")
     elif det == "raw":
         ttos.go(value)
-        play("temp/ttos.mp3")
+        play("temp/audio/ttos.wav")
     elif det == "nav":
-        play("temp/nav.mp3")
+        play("temp/audio/nav.wav")
     else: 
         print("ERR - Invalid call")
 
@@ -39,5 +39,5 @@ def play(file):
 
 if __name__ == '__main__':
 
-    play("temp/ttos.mp3")
+    play("temp/audio/ttos.wav")
 
