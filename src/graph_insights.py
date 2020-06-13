@@ -119,7 +119,6 @@ def sg_filter(x, y, n):
     fx = np.around(fx,decimals=5)
     fy = np.around(fx,decimals=5)
 
-    #data = np.column_stack((x.flatten(), fy.flatten()))
     data = np.column_stack((x, fy))
 
     np.savetxt(path + str(n) + '.csv', data, delimiter=' ', fmt='%f')
