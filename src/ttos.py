@@ -30,19 +30,18 @@ def ssml_to_speech(ssml_text):
     with open('temp/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
-    gender = data["settings"][0]["gender"]
-    print(data["settings"][0]["speaking_rate"])
+    gender = str(data["settings"][0]["gender"])
 
     if gender == "mail" or gender == "male":
         voice = texttospeech.types.VoiceSelectionParams(
             language_code='en-GB',
             ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE,
-            name='en-GB-Wavenet-C')
-    else:
+            name='en-GB-Wavenet-B')
+    elif gender == "female":
         voice = texttospeech.types.VoiceSelectionParams(
             language_code='en-GB',
             ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE,
-            name='en-GB-Wavenet-C')
+            name='en-GB-Wavenet-A')
 
     # Determine the encoding
     audio_config = texttospeech.types.AudioConfig(
@@ -137,6 +136,7 @@ def text_to_ssml(input_text, equ):
         convert = convert.replace('\prod', 'the product of')
         convert = convert.replace('\lim_', 'with a lower limit of')
         convert = convert.replace('_{', 'with a lower limit of')
+        convert = convert.replace('^', 'to the power of')
         
 
     ssml_text = '<speak>{}</speak>'.format(convert)

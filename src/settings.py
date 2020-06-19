@@ -29,7 +29,6 @@ def CallBackA(controlId, value):
 
     # (Y)
     if controlId == 9 and value == 0:
-        print("Y")
 
     # DPad
     if controlId == 17:
@@ -57,7 +56,6 @@ def CallBackA(controlId, value):
 
     # (XBOX)
     if controlId == 8 and value == 0:
-        print("Xbox")
 
     return
 
@@ -88,6 +86,7 @@ def window():
 
                 audio.go("key", "access_029")
                 sett == True
+                break
         except:
             audio.go("key", "access_030")
 
@@ -107,7 +106,8 @@ def gender():
     while sett == False and back == False:
         try:
             audio.go("key", "access_032")
-            g = int(stot.get())
+            g = str(stot.get())
+            print(g)
             if g == "female" or g == "mail" or g == "male":
                 
                 with open('temp/access.JSON', 'r') as f:
@@ -125,6 +125,7 @@ def gender():
 
                 audio.go("key", "access_029")
                 sett == True
+                break
         except:
             audio.go("key", "access_030")
 
@@ -162,6 +163,7 @@ def speakrate():
 
                 audio.go("key", "access_029")
                 sett == True
+                break
         except:
             audio.go("key", "access_030")
 
@@ -175,12 +177,12 @@ def speakrate():
     
 def begin():
 
-    global back, select, pointer_ud, pointer_lr, swap, a_graphs, a_gender, a_speakrate
+    global back, select, pointer_ud, pointer_lr, swap, a_window, a_gender, a_speakrate
     pointer_ud = [-1, -1]
     pointer_lr = [-1, -1]
     back = False
     swap = False
-    a_graphs = False
+    a_window = False
     a_gender = False
     a_speakrate = False
     select = False

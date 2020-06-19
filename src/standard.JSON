@@ -3,32 +3,21 @@
         {
             "identity": "",
             "bookmarked": "",
+            "topic": "",
             "description": "",
-            "notes": [
-            ],
-            "image_results": [
-
-            ],
-            "graph_results": [
-
-            ],
-            "equations": [
-
-            ],
-            "text": [
-                
-            ],
-            "misc": [
-                
-            ]
+            "notes": [],
+            "image_results": [],
+            "graph_results": [],
+            "equations": [],
+            "text": [],
+            "misc": []
         }
     ],
-    "settings" : [
+    "settings": [
         {
-            "window" : "",
-            "gender" : "",
-            "speaking_rate" :""
+            "window": 2,
+            "gender": "mail",
+            "speaking_rate": 1.1
         }
-
     ]
 }
