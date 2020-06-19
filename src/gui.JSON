@@ -1,0 +1,20 @@
+{
+    "loc": "access",
+    "speech": "You are now at the access menu",
+    "microphone": "Try to remember that this may change over time",
+    "a": "red",
+    "b": "red",
+    "x": "red",
+    "y": "red",
+    "lb": "red",
+    "rb": "red",
+    "back": "red",
+    "start": "red",
+    "xbox": "green",
+    "lt": "red",
+    "rt": "red",
+    "du": "red",
+    "dd": "red",
+    "dl": "red",
+    "dr": "red"
+}

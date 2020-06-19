@@ -11,6 +11,7 @@ import graph_audio
 import os
 import stot
 import settings
+import gui
 import concurrent.futures
 
 
@@ -591,6 +592,8 @@ def text():
 
     
 def begin():
+
+    print("ookokokokokokokko")
 
     global back, select, pointer_ud, pointer_lr, swap, a_graphs, a_images, a_tables, a_notes, a_equations, a_text
     pointer_ud = [-1, -1]

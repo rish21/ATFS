@@ -7,7 +7,10 @@ import audio
 import scanner
 import extraction
 import access
+import gui
 import concurrent.futures
+
+from multiprocessing import Process
 
 
 # Controller Callback
@@ -25,7 +28,7 @@ def CallBackM(controlId, value):
         else:
             audio.go("key", "main_010")
         
-    # Run extraction if a document has been scanned
+    # Run extraction if a document has been scanned (X)
     if controlId == 8 and value == 0 and ext_flag == True:
         audio.go("key", "main_005")
         global load_flag
@@ -69,8 +72,11 @@ if __name__ == '__main__':
 
     global end, ext_flag, load_flag
     end = False
-    ext_flag = False
+    ext_flag = True
     load_flag = False
+
+    p = Process(target=gui.run, args=(True,))
+    p.start()
 
     xboxContM = XboxController.XboxController(
         controllerCallBack = CallBackM,
@@ -86,4 +92,5 @@ if __name__ == '__main__':
     while end == False:
         pass
 
+    p.terminate()
     xboxContM.stop()
