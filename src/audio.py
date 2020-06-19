@@ -16,6 +16,9 @@ def go(det, value):
     elif det == "raw":
         ttos.go(value, False)
         play("temp/audio/ttos.wav")
+    elif det == "equ":
+        ttos.go(value, True)
+        play("temp/audio/ttos.wav")
     elif det == "nav":
         play("temp/audio/nav.wav")
     else: 
