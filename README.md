@@ -16,12 +16,12 @@ The WHO reports with confidence that there are currently over 2 billion people i
 
 This project was programmed using Python3.6.
 
-The 'requirements.txt' file should list all Python dependencies, and they should be installed using:
+The `requirements.txt` file should list all Python dependencies, and they should be installed using:
 
 ```python
 pip install -r requirements.txt
 ```
-Ensure you are in the 'src' directory and run:
+Ensure you are in the `src` directory and run:
 
 ```python
 python main.py
