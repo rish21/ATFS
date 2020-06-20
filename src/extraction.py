@@ -13,11 +13,14 @@ import equations
 import time
 import audio
 import nlp
+import os
+import shutil
+import glob
 
 
 def run():
 
-    #audio.go("key", "extraction_001")
+    audio.go("key", "extraction_001")
     startt = time.time()
 
     try:
@@ -44,7 +47,7 @@ def run():
         print('Graph - It took', time.time()-start, 'seconds.')
         start = time.time()
 
-        #audio.go("key", "extraction_002")
+        audio.go("key", "extraction_002")
 
         # Step 5 - Get insights for graph trends extracted
         graph_insights.get()
@@ -62,14 +65,17 @@ def run():
         start = time.time()
 
         # Step 7 - Extract equations
-        equations.get()
+        #equations.get()
         print('Equations - It took', time.time()-start, 'seconds.')
         start = time.time()
 
-        # Step 8 - Perform NLP analysis - summarisation
-        nlp.summ()
-        print('Summarisation - It took', time.time()-start, 'seconds.')
+        # Step 8 - Perform NLP analysis - summarisation & content analysis
+        nlp.get()
+        print('NLP - It took', time.time()-start, 'seconds.')
         start = time.time()
+
+        # Store all the extracted information
+        path = store()
 
     except:
         #audio.go("key", "extraction_004")
@@ -77,11 +83,51 @@ def run():
         return False
     
     print('Final - It took', time.time()-startt, 'seconds.')
-    #audio.go("key", "extraction_003")
+    audio.go("key", "extraction_003")
 
-    return True
+    return True, path
+
+def store():
+
+    # Number of documents stored
+    path = "../library/"
+    folder_no = len(next(os.walk(path))[1])
+    path = path + str(folder_no)
+
+    # Store extracted document
+    os.mkdir(path)
+
+    shutil.copy("temp/access.JSON", path)
+
+    src = "temp/csv/"
+    dst = path + "/csv/"
+    os.mkdir(dst)
+    
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, False, None)
+        else:
+            shutil.copy2(s, d)
+
+    src = "temp/audio/"
+    dst = path + "/audio/"
+    os.mkdir(dst)
+    
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, False, None)
+        else:
+            shutil.copy2(s, d)
+
+
+    return path
 
 
 if __name__ == '__main__':
 
     run()
+    #store()

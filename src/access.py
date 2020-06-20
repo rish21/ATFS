@@ -18,7 +18,7 @@ import concurrent.futures
 # Controller Callback
 def CallBackA(controlId, value):
 
-    global back, select, pointer_ud, pointer_lr, swap, ignore, a_tables, a_graphs, a_images, a_notes, a_equations, a_text
+    global back, select, pointer_ud, pointer_lr, swap, ignore, a_tables, a_graphs, a_images, a_notes, a_equations, a_text, a_settings
 
     # Tables (A)
     if controlId == 6 and value == 0:
@@ -45,14 +45,10 @@ def CallBackA(controlId, value):
             a_text = True
         else:
             select = True
-        print("Lshoulder")
     
-    # Shoulder (Rshoulder)
+    # Setings (Rshoulder)
     if controlId == 11 and value == 0:
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(settings.begin,)
-        audio.go("key", "access_008")
-        print("Rshoulder")
+        a_settings = True
 
     # DPad
     if controlId == 17:
@@ -75,7 +71,6 @@ def CallBackA(controlId, value):
 
     # Stop program (BACK)
     if controlId == 12 and value == 0:
-        print("BACK")
         back = True
 
     # Add Notes (XBOX)
@@ -101,7 +96,20 @@ def CallBackA(controlId, value):
     return
 
 
-def graphs():
+def settings_(path):
+
+    global a_settings
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(settings.begin, path)
+    audio.go("key", "access_008")
+
+    a_settings = False
+
+    return
+
+
+def graphs(path):
 
     global pointer_ud, pointer_lr, back, a_graphs, select
     pointer_ud[1] = -1
@@ -134,7 +142,7 @@ def graphs():
     
     # Graph Descriptions
     if pointer_lr[1] == 0:
-        with open('temp/access.JSON', 'r') as f:
+        with open(path + '/access.JSON', 'r') as f:
             data = dict(json.load(f))
 
         no_items = len(data["page"][0]["graph_results"][0])
@@ -164,11 +172,10 @@ def graphs():
     # Full Graph Audio
     if pointer_lr[1] == 1:
 
-        path = "temp/csv/"
         pointer_ud[1] = -1
         pointer_lr[1] = -1
 
-        with open('temp/access.JSON', 'r') as f:
+        with open(path + '/access.JSON', 'r') as f:
             data = dict(json.load(f))
 
         no_files = len(data["page"][0]["graph_results"][0])
@@ -178,7 +185,7 @@ def graphs():
 
         while pointer_ud[1] >= -2 and pointer_ud[1] <= no_files and back == False:
             if pointer_ud[1] != prev_point and pointer_ud[1] != no_files and pointer_ud[1] > -1:
-                audio.play("temp/audio/final0.wav")
+                audio.play(path + "/audio/final0.wav")
                 prev_point = pointer_ud[1]
             if pointer_ud[1] != prev_point and pointer_ud[1] == no_files:
                 audio.go("key", "access_006")
@@ -196,13 +203,11 @@ def graphs():
     # By point Graph Audio
     if pointer_lr[1] == 2:
 
-        path = "temp/csv/"
         pointer_ud[1] = -1
         pointer_lr[1] = -1
 
-        no_files = len(next(os.walk(path))[2])
+        no_files = len(next(os.walk(path + "/csv"))[2])
         voice = "There are " + str(no_files) + " graphs, use the up and down directions on the Dpad to select which graph to access and press X"
-        print(voice)
         audio.go("raw", voice)
 
         while pointer_ud[1] >= -2 and pointer_ud[1] <= no_files and back == False and select == False:
@@ -224,12 +229,11 @@ def graphs():
         select = False
         p = pointer_ud
 
-        with open('temp/access.JSON', 'r') as f:
+        with open(path + '/access.JSON', 'r') as f:
             data = dict(json.load(f))
 
         no_items = data["page"][0]["misc"][0][str(p)]
         voice = "There are " + str(no_items) + " data points, use the left and right directions on the Dpad to move from point to point."
-        print(voice)
         audio.go("raw", voice)
 
         while pointer_ud[1] >= -2 and pointer_ud[1] <= no_items and back == False:
@@ -261,13 +265,13 @@ def graphs():
     return
 
 
-def images():
+def images(path):
 
     global pointer_ud, back, a_images
     pointer_ud[1] = -1
     prev_point = pointer_ud[1]
 
-    with open('temp/access.JSON', 'r') as f:
+    with open(path + '/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
     no_items = len(data["page"][0]["image_results"][0])
@@ -300,7 +304,7 @@ def images():
     return
 
 
-def tables():
+def tables(path):
 
     global pointer_ud, back, a_tables, swap, ignore
     ignore = False
@@ -309,7 +313,7 @@ def tables():
     c_heading = []
     r_heading = []
 
-    table_path = "temp/csv/tables/tables-page-1-table-1.csv"
+    table_path = path + "/csv/tables/tables-page-1-table-1.csv"
 
     with open(table_path, newline='') as csvfile:
         im = csv.reader(csvfile, delimiter=',', quotechar='|')
@@ -367,7 +371,7 @@ def tables():
     return
 
 
-def notes():
+def notes(path):
     
     global a_notes, select, back
     pointer_ud[1] = -1
@@ -399,7 +403,7 @@ def notes():
 
         counter = 0
 
-        with open('temp/access.JSON', 'r') as f:
+        with open(path + '/access.JSON', 'r') as f:
             data = dict(json.load(f))
 
         while back == False:
@@ -413,7 +417,7 @@ def notes():
 
     # Saved notes
     if pointer_lr[1] == 1:
-        with open('temp/access.JSON', 'r') as f:
+        with open(path + '/access.JSON', 'r') as f:
             data = dict(json.load(f))
 
         no_items = len(data["page"][0]["notes"][0])
@@ -438,7 +442,6 @@ def notes():
                 prev_point = pointer_ud[1]
         pass
 
-
     audio.go("key", "access_008")
     a_notes = False
     back = False
@@ -446,13 +449,13 @@ def notes():
     return
 
 
-def equations():
+def equations(path):
 
     global pointer_ud, back, a_equations
     pointer_ud[1] = -1
     prev_point = pointer_ud[1]
 
-    with open('temp/access.JSON', 'r') as f:
+    with open(path + '/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
     no_items = len(data["page"][0]["equations"][0])
@@ -464,7 +467,7 @@ def equations():
         if pointer_ud[1] != prev_point and pointer_ud[1] != no_items and pointer_ud[1] > -1:
             temp = data["page"][0]["equations"][0][str(pointer_ud[1])]
             voice = "Equation " + str(pointer_ud[1]) + " states that " +  temp
-            audio.go("raw", voice)
+            audio.go("equ", voice)
             prev_point = pointer_ud[1]
         if pointer_ud[1] != prev_point and pointer_ud[1] == no_items:
             audio.go("key", "access_006")
@@ -485,13 +488,13 @@ def equations():
     return
 
 
-def text():
+def text(path):
 
     global pointer_ud, back, a_text, select
     pointer_ud[1] = -1
     prev_point = pointer_ud[1]
 
-    with open('temp/access.JSON', 'r') as f:
+    with open(path + '/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
     no_items = len(data["page"][0]["text"])
@@ -501,7 +504,7 @@ def text():
 
     while pointer_ud[1] >= -2 and pointer_ud[1] <= no_items and back == False:
         if pointer_ud[1] != prev_point and pointer_ud[1] != no_items and pointer_ud[1] > -1:
-            rem = pointer_ud[1]
+            rem = int(pointer_ud[1])
 
             voice = "Text piece " + str(pointer_ud[1] + 1) + ", please use the left and right directions to select between sentences and full pieces"
             audio.go("raw", voice)
@@ -540,19 +543,20 @@ def text():
 
                 while pointer_ud[1] >= -2 and pointer_ud[1] <= no and back == False:
                     if pointer_ud[1] != prev_point and pointer_ud[1] != no and pointer_ud[1] > -1:
-                        voice = data["page"][0]["text"][rem]["sentences"][str(pointer_ud[1])]["text"]
+                        voice = data["page"][0]["text"][rem]["sentences"][pointer_ud[1]]["text"]
                         audio.go("raw", voice)
 
-                        if data["page"][0]["text"][rem]["sentences"][str(pointer_ud[1])]["highlighted"] == 1:
+                        if data["page"][0]["text"][rem]["sentences"][pointer_ud[1]]["highlighted"] == 1:
                             audio.go("key", "access_024")
                         else:
                             audio.go("key", "access_023")
-                            while back == True:
+                            while back == False:
                                 if select == True:
-                                    data["page"][0]["text"][rem]["sentences"][str(pointer_ud[1])]["highlighted"] = 1
-                                    with open('temp/access.JSON', 'w') as n:
+                                    data["page"][0]["text"][rem]["sentences"][pointer_ud[1]]["highlighted"] = 1
+                                    with open(path + '/access.JSON', 'w') as n:
                                         json.dump(data, n, indent=4, sort_keys=False)
                                     audio.go("key", "access_025")
+                                    back = True
                         select = False
                         back = False
                         prev_point = pointer_ud[1]
@@ -591,11 +595,9 @@ def text():
     return
 
     
-def begin():
+def begin(path):
 
-    print("ookokokokokokokko")
-
-    global back, select, pointer_ud, pointer_lr, swap, a_graphs, a_images, a_tables, a_notes, a_equations, a_text
+    global back, select, pointer_ud, pointer_lr, swap, a_graphs, a_images, a_tables, a_notes, a_equations, a_text, a_settings
     pointer_ud = [-1, -1]
     pointer_lr = [-1, -1]
     back = False
@@ -606,6 +608,7 @@ def begin():
     a_notes = False
     a_equations = False
     a_text = False
+    a_settings = False
     select = False
 
     xboxContA = XboxController.XboxController(
@@ -617,27 +620,30 @@ def begin():
 
     xboxContA.start()
 
-    #audio.go("key", "access_008")
+    audio.go("key", "access_008")
 
     while back == False:
 
         if a_graphs == True:
-            graphs()
+            graphs(path)
 
         if a_images == True:
-            images()
+            images(path)
 
         if a_tables == True:
-            tables()
+            tables(path)
         
         if a_notes == True:
-            notes()
+            notes(path)
         
         if a_equations == True:
-            equations()
+            equations(path)
 
         if a_text == True:
-            text()
+            text(path)
+
+        if a_settings == True:
+            settings_(path)
 
         pass
 
@@ -646,7 +652,8 @@ def begin():
     return back
 
 
-
 if __name__ == '__main__':
 
-    begin()
+    path = "../library/0"
+
+    begin(path)

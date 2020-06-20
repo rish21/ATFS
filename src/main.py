@@ -7,61 +7,182 @@ import audio
 import scanner
 import extraction
 import access
-import gui
 import concurrent.futures
 
+import gui
+import os
+import json
 from multiprocessing import Process
 
 
 # Controller Callback
 def CallBackM(controlId, value):
 
-    # Scan new document
+    global back, select, m_scan, m_extract, m_access, m_access_old, pointer_ud, pointer_lr
+
+    # Scan new document (A)
     if controlId == 6 and value == 0:
-        global ext_flag      
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(scanner.run,)
-            ext_flag = future.result()
-        audio.go("key", "main_008")
-        if ext_flag == True:
-            audio.go("key", "main_003")
-        else:
-            audio.go("key", "main_010")
+        m_scan = True
         
     # Run extraction if a document has been scanned (X)
     if controlId == 8 and value == 0 and ext_flag == True:
+        m_extract = True
+
+    # Access current scanned document (B)
+    if controlId == 7 and value == 0 and load_flag == True:
+        m_access = True
+
+    # Access old scanned documents (Y)
+    if controlId == 9 and value == 0:
+        if m_access_old == False:
+            m_access_old = True
+        else:
+            select = True
+
+    # DPad
+    if controlId == 17:
+        if value[1] == -1:
+            #print("down")
+            pointer_ud[0] = pointer_ud[1]
+            pointer_ud[1] = pointer_ud[1] - 1
+        elif value[1] == 1:
+            #print("up")
+            pointer_ud[0] = pointer_ud[1]
+            pointer_ud[1] = pointer_ud[1] + 1
+        elif value[0] == -1:
+            #print("left")
+            pointer_lr[0] = pointer_lr[1]
+            pointer_lr[1] = pointer_lr[1] - 1
+        elif value[0] == 1:
+            #print("right")
+            pointer_lr[0] = pointer_lr[1]
+            pointer_lr[1] = pointer_lr[1] + 1
+
+
+    # Stop program (BACK)
+    if controlId == 12 and value == 0:
+        back = True
+
+    return
+
+
+def scan(xboxContM):
+
+    global m_scan, ext_flag
+  
+    # Run document scanning
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future = executor.submit(scanner.run,)
+        ext_flag = future.result()
+    
+    if ext_flag == True:
+        # Scan successful 
+        audio.go("key", "main_003")
+    else:
+        # Scan unsuccessful
+        audio.go("key", "main_010")
+
+    m_scan = False
+
+    return
+
+
+def extract():
+
+    global m_extract, load_flag
+
+    if ext_flag == True:
+        # Extract information from document 
         audio.go("key", "main_005")
-        global load_flag
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(extraction.run,)
-            load_flag = future.result()
-        audio.go("key", "main_008")
+            load_flag, path = future.result()
         if load_flag == True:
+            # Successful extraction
             audio.go("key", "main_009")
         else:
+            # Unsuccessful extraction
             audio.go("key", "main_011")
-    elif controlId == 8 and value == 0 and ext_flag == False:
+    else:
+        # Document not scanned
         audio.go("key", "main_006")
 
-    # Load current document
-    if controlId == 7 and value == 0 and load_flag == True:
-        print("ok")
-    elif controlId == 7 and value == 0 and ext_flag == False:
+    m_extract = False
+
+    return path
+
+
+def access_n(path):
+
+    global m_access, ext_flag, load_flag
+
+    if ext_flag == True and load_flag == True:
+        # Access document just scanned
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(access.begin, path)
+    else:
+        # Document not scaned or ectracted
         audio.go("key", "main_007")
 
-    # Load old document Y
-    if controlId == 9 and value == 0:
-        print("access")
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(access.begin,)
-        print("main")
+    audio.go("key", "main_008")
+    m_access = False
 
-    # Stop program
-    if controlId == 12 and value == 0:
-        global end
-        end = True
-        #audio.go("key", "main_004")
-        print("Program Stopping")
+    return
+
+
+def access_o():
+
+    global m_access_old, ext_flag, load_flag, pointer_ud, back, select
+    pointer_ud[1] = -1
+    prev_point = pointer_ud[1]
+    ext_flag = True
+
+    while back == False:
+        if ext_flag == True and load_flag == True:
+            
+            # Number of stored documents
+            folders = next(os.walk("../library/"))[1]
+            no_folders = len(folders)
+
+            voice = "There are " + str(no_folders) + " stored documents, please use the up and down directions on the Dpad to find and select which document to access and press Y to select"
+            audio.go("raw", voice)
+            
+            # Select which document to access
+            while pointer_ud[1] >= -2 and pointer_ud[1] <= no_folders and select == False and back == False:
+                if pointer_ud[1] != prev_point and pointer_ud[1] != no_folders and pointer_ud[1] > -1:
+                    with open('../library/' + str(folders[pointer_ud[1]]) + '/access.JSON', 'r') as f:
+                        data = dict(json.load(f))
+                    topic = data["page"][0]["topic"]
+                    voice = "This is document " + str(folders[pointer_ud[1]]) + ", and it is about " +  topic
+                    audio.go("raw", voice)
+                    path = '../library/' + str(folders[pointer_ud[1]])
+                    prev_point = pointer_ud[1]
+                if pointer_ud[1] != prev_point and pointer_ud[1] == no_folders:
+                    audio.go("key", "access_006")
+                    prev_point = pointer_ud[1]
+                if pointer_ud[1] != prev_point and pointer_ud[1] == -1:
+                    audio.go("key", "access_007")
+                    prev_point = pointer_ud[1]
+                if pointer_ud[1] != prev_point and pointer_ud[1] == -2:
+                    audio.go("key", "access_007")
+                    pointer_ud[1] = -1
+                    prev_point = pointer_ud[1]
+                pass
+            
+            if back == False:
+                # Access document
+                audio.go("key", "access_014")
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                    future = executor.submit(access.begin, path)
+                    back = True
+        else:
+            # Document not scanned or extracted
+            audio.go("key", "main_007")
+
+    audio.go("key", "main_008")
+    m_access_old = False
+    select = False
+    back = False
 
     return
 
@@ -69,14 +190,24 @@ def CallBackM(controlId, value):
 if __name__ == '__main__':
 
     #audio.go("key", "main_001")
-
-    global end, ext_flag, load_flag
-    end = False
-    ext_flag = True
+    
+    # Declare and initialise 
+    global back, select, ext_flag, load_flag, path, pointer_ud, pointer_lr, m_scan, m_extract, m_access, m_access_old
+    pointer_ud = [-1, -1]
+    pointer_lr = [-1, -1]
+    back = False
+    m_scan = False
+    m_extract = False
+    m_access = False
+    m_access_old = False
+    ext_flag = False
     load_flag = False
+    select = False
+    path = ""
 
-    p = Process(target=gui.run, args=(True,))
-    p.start()
+    # GUI
+    #p = Process(target=gui.run, args=(True,))
+    #p.start()
 
     xboxContM = XboxController.XboxController(
         controllerCallBack = CallBackM,
@@ -89,8 +220,24 @@ if __name__ == '__main__':
 
     #audio.go("key", "main_002")
 
-    while end == False:
+    # System begins operation
+    while back == False:
+
+        if m_scan == True:
+            scan(xboxContM)
+
+        if m_extract == True:
+            path = extract()
+
+        if m_access == True:
+            access_n(path)
+
+        if m_access_old == True:
+            access_o()
+
         pass
 
-    p.terminate()
+    # System shuts down
+    audio.go("key", "main_004")
+    #p.terminate()
     xboxContM.stop()

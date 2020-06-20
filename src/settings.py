@@ -11,24 +11,21 @@ import stot
 
 
 # Controller Callback
-def CallBackA(controlId, value):
+def CallBackS(controlId, value):
 
-    global back, select, pointer_ud, pointer_lr, swap, a_window, a_gender, a_speakrate
+    global back, select, pointer_ud, pointer_lr, swap, s_window, s_gender, s_speakrate
 
     # Window (A)
     if controlId == 6 and value == 0:
-        a_window = True
+        s_window = True
         
     # Gender (X)
     if controlId == 8 and value == 0:
-        a_gender = True
+        s_gender = True
 
     # Speaking Rate (B)
     if controlId == 7 and value == 0:
-       a_speakrate = True
-
-    # (Y)
-    if controlId == 9 and value == 0:
+       s_speakrate = True
 
     # DPad
     if controlId == 17:
@@ -51,27 +48,24 @@ def CallBackA(controlId, value):
 
     # Stop program (BACK)
     if controlId == 12 and value == 0:
-        print("BACK")
         back = True
-
-    # (XBOX)
-    if controlId == 8 and value == 0:
 
     return
 
 
-def window():
+def window(path):
 
-    global pointer_ud, back, a_window
+    global pointer_ud, back, s_window
     sett = False
 
+    # Set window size for graph audio 
     while sett == False and back == False:
         try:
             audio.go("key", "access_028")
             w = int(stot.get())
             if w >= 1 and w <= 10:
                 
-                with open('temp/access.JSON', 'r') as f:
+                with open(path + '/access.JSON', 'r') as f:
                     data_n = dict(json.load(f))
                 with open('standard.JSON', 'r') as f:
                     data_s = dict(json.load(f))
@@ -79,7 +73,7 @@ def window():
                 data_n["settings"][0]["window"] = w
                 data_s["settings"][0]["window"] = w
 
-                with open('temp/access.JSON', 'w') as n:
+                with open(path + '/access.JSON', 'w') as n:
                     json.dump(data_n, n, indent=4, sort_keys=False)
                 with open('standard.JSON', 'w') as n:
                     json.dump(data_s, n, indent=4, sort_keys=False)
@@ -91,18 +85,19 @@ def window():
             audio.go("key", "access_030")
 
     audio.go("key", "access_026")
-    a_window = False
+    s_window = False
     sett = False
     back = False
 
     return
 
 
-def gender():
+def gender(path):
 
-    global pointer_ud, back, a_gender
+    global pointer_ud, back, s_gender
     sett = False
 
+    # Set gender for text to speech
     while sett == False and back == False:
         try:
             audio.go("key", "access_032")
@@ -110,7 +105,7 @@ def gender():
             print(g)
             if g == "female" or g == "mail" or g == "male":
                 
-                with open('temp/access.JSON', 'r') as f:
+                with open(path + '/access.JSON', 'r') as f:
                     data_n = dict(json.load(f))
                 with open('standard.JSON', 'r') as f:
                     data_s = dict(json.load(f))
@@ -118,7 +113,7 @@ def gender():
                 data_n["settings"][0]["gender"] = g
                 data_s["settings"][0]["gender"] = g
 
-                with open('temp/access.JSON', 'w') as n:
+                with open(path + '/access.JSON', 'w') as n:
                     json.dump(data_n, n, indent=4, sort_keys=False)
                 with open('standard.JSON', 'w') as n:
                     json.dump(data_s, n, indent=4, sort_keys=False)
@@ -130,25 +125,26 @@ def gender():
             audio.go("key", "access_030")
 
     audio.go("key", "access_026")
-    a_gender = False
+    s_gender = False
     sett = False
     back = False
 
     return
 
 
-def speakrate():
+def speakrate(path):
 
-    global pointer_ud, back, a_speakrate
+    global pointer_ud, back, s_speakrate
     sett = False
 
+    # Set speaking rate
     while sett == False and back == False:
         try:
             audio.go("key", "access_034")
             sr = float(stot.get())
             if sr >= 0.25 and sr <= 4.0:
                 
-                with open('temp/access.JSON', 'r') as f:
+                with open(path + '/access.JSON', 'r') as f:
                     data_n = dict(json.load(f))
                 with open('standard.JSON', 'r') as f:
                     data_s = dict(json.load(f))
@@ -156,7 +152,7 @@ def speakrate():
                 data_n["settings"][0]["speaking_rate"] = sr
                 data_s["settings"][0]["speaking_rate"] = sr
 
-                with open('temp/access.JSON', 'w') as n:
+                with open(path + '/access.JSON', 'w') as n:
                     json.dump(data_n, n, indent=4, sort_keys=False)
                 with open('standard.JSON', 'w') as n:
                     json.dump(data_s, n, indent=4, sort_keys=False)
@@ -168,33 +164,34 @@ def speakrate():
             audio.go("key", "access_030")
 
     audio.go("key", "access_026")
-    a_speakrate = False
+    s_speakrate = False
     sett = False
     back = False
 
     return
 
     
-def begin():
+def begin(path):
 
-    global back, select, pointer_ud, pointer_lr, swap, a_window, a_gender, a_speakrate
+    # Declare and initialise 
+    global back, select, pointer_ud, pointer_lr, swap, s_window, s_gender, s_speakrate
     pointer_ud = [-1, -1]
     pointer_lr = [-1, -1]
     back = False
     swap = False
-    a_window = False
-    a_gender = False
-    a_speakrate = False
+    s_window = False
+    s_gender = False
+    s_speakrate = False
     select = False
 
-    xboxContA = XboxController.XboxController(
-        controllerCallBack = CallBackA,
+    xboxContS = XboxController.XboxController(
+        controllerCallBack = CallBackS,
         joystickNo = 0,
         deadzone = 0.1,
         scale = 1,
         invertYAxis = False)
 
-    xboxContA.start()
+    xboxContS.start()
 
     audio.go("key", "access_026")
 
@@ -202,20 +199,21 @@ def begin():
     audio.go("key", "access_031")
     audio.go("key", "access_033")
 
+    # System begins operation
     while back == False:
 
-        if a_window == True:
-            window()
+        if s_window == True:
+            window(path)
 
-        if a_gender == True:
-            gender()
+        if s_gender == True:
+            gender(path)
 
-        if a_speakrate == True:
-            speakrate()
+        if s_speakrate == True:
+            speakrate(path)
 
         pass
 
-    xboxContA.stop()
+    xboxContS.stop()
     
     return back
 
@@ -223,4 +221,5 @@ def begin():
 
 if __name__ == '__main__':
 
-    begin()
+    path = "temp/"
+    begin(path)
