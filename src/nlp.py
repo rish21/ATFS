@@ -29,12 +29,16 @@ def content_analysis():
     response = client.classify_text(document)
 
     # Store topic
-    topic = response.categories[0].name
-    topic = topic.replace('/', ' ')
-    data["page"][0]["topic"] = topic
+    try:
+        topic = response.categories[0].name
+        topic = topic.replace('/', ' ')
+        data["page"][0]["topic"] = topic
 
-    with open('temp/access.JSON', 'w') as n:
-        json.dump(data, n, indent=4, sort_keys=False)
+        with open('temp/access.JSON', 'w') as n:
+            json.dump(data, n, indent=4, sort_keys=False)
+    except:
+        print("No response")
+        pass
 
     return response.categories[0]
 
