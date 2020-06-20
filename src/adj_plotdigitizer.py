@@ -328,7 +328,10 @@ def main(args):
 
 
 def get():
+    
+    # Main adjustment 
 
+    # Manual argument parsing 
     print("pkg_PLOTDIGITIZER - Extracting plot data from image") 
     sys.argv.append('-i 0.jpg')
     sys.argv.append('-p 0,0')
@@ -336,12 +339,13 @@ def get():
     sys.argv.append('-p 0,10')
     #sys.argv.append('--plot')
 
+    # Run for all graphs detected
     no_files = next(os.walk("temp/blocks/graphs"))[2]
 
     for n, f in enumerate(no_files):
 
         global use_file, save_file
-        use_file = 'temp/blocks/graphs/' + str(n) + '.jpg'
+        use_file = 'temp/blocks/graphs/' + str(n) + '.png'
         save_file = 'temp/csv/' + str(n) + '.csv'
 
         main(sys.argv[:])

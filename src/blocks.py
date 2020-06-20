@@ -88,14 +88,15 @@ def get_graph(item):
             points.append(y + h)
             cut = original[y:y+h, x:x+w]
             cv2.imwrite("temp/blocks/" + item + "/"  + str(count) + '.jpg', cut)
-            remove_graph(points, item, count)
+            remove(points, item, count)
             count = count + 1
 
     return 
 
 
-def remove_graph(points, item, count):
+def remove(points, item, count):
     
+    # Remove graph or image from page
     t = Image.open(path + '.jpg').convert("RGB")
     draw = ImageDraw.Draw(t)
     draw.rectangle(((points[0],points[1]), (points[2],points[3])), fill="white")

@@ -19,7 +19,7 @@ def ssml_to_speech(ssml_text):
 
     #sys.stdout = sys.__stdout__
 
-    # Setup enviroment and initiliase client
+    # Setup enviroment and instantiate client
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'/home/rishmanju/atfs/documents/static-forest-277817-d4e340a3e881.json'
     client = texttospeech.TextToSpeechClient()
 
@@ -27,7 +27,7 @@ def ssml_to_speech(ssml_text):
     synthesis_input = texttospeech.types.SynthesisInput(ssml=ssml_text)
 
     # Configure the voice request (Language, Gender and Voice Type)
-    with open('temp/access.JSON', 'r') as f:
+    with open('standard.JSON', 'r') as f:
         data = dict(json.load(f))
 
     gender = str(data["settings"][0]["gender"])
@@ -117,6 +117,17 @@ def text_to_ssml(input_text, equ):
         convert = convert.replace('\ngeq', 'is neither greater than or equal to')
         convert = convert.replace('\ngeqslant', 'is neither greater than or equal to')
 
+        convert = convert.replace('\sinh', 'sine')
+        convert = convert.replace('\cosh', 'cosine')
+        convert = convert.replace('\tanh', 'cosine')
+
+        convert = convert.replace('\int', ' the integral of ')
+        convert = convert.replace('\sum', ' the sum of ')
+        convert = convert.replace('\prod', ' the product of ')
+        convert = convert.replace('\lim_', ' with a lower limit of ')
+        convert = convert.replace('_{', ' with a lower limit of ')
+        convert = convert.replace('^', ' to the power of ')
+
         convert = convert.replace('\in', 'belongs to')
         convert = convert.replace('\perp', ' is perpendicular to')
         convert = convert.replace('\notin', 'does not belong to')
@@ -126,19 +137,7 @@ def text_to_ssml(input_text, equ):
         convert = convert.replace('\equiv', 'is equivalent to')
         convert = convert.replace('\cong', 'is congruent to')
         convert = convert.replace('\propto', 'is proportional to')
-
-        convert = convert.replace('\sinh', 'sine')
-        convert = convert.replace('\cosh', 'cosine')
-        convert = convert.replace('\tanh', 'cosine')
-
-        convert = convert.replace('\int', 'the integral of')
-        convert = convert.replace('\sum', 'the sum of')
-        convert = convert.replace('\prod', 'the product of')
-        convert = convert.replace('\lim_', 'with a lower limit of')
-        convert = convert.replace('_{', 'with a lower limit of')
-        convert = convert.replace('^', 'to the power of')
         
-
     ssml_text = '<speak>{}</speak>'.format(convert)
 
     return ssml_text
@@ -154,5 +153,5 @@ def go(input_text, equ):
 
 if __name__ == '__main__':
 
-    random = "Hello there, I want to see if this works"
-    go(random, False)
+    random = "\int x^2 dx"
+    go(random, True)

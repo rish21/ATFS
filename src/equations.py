@@ -16,6 +16,7 @@ def process(filePath):
 
     store = ""
 
+    # Send MATHPIX request
     try:
         mathpix = MathPix(app_id=idd, app_key=key)
         ocr = mathpix.process_image(image_path=filePath)
@@ -28,6 +29,7 @@ def process(filePath):
 
 def store_json(results):
 
+    # Store equations in JSON file
     with open('temp/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
@@ -45,6 +47,7 @@ def get():
 
     print("pkg_Equations - Extracting equations images")
 
+    # Run for all blocks extracted from the page
     results = []
     no_files = next(os.walk(path))[2]
 

@@ -15,6 +15,7 @@ def get():
 
     print("pkg_IMAGE_INSIGHTS - Getting insights for detected images")
 
+    # Try for all images extracted
     results=[]
     no_files = next(os.walk(path))[2]
 
@@ -49,6 +50,7 @@ def get():
 
 def store_json(results):
 
+    # Store image descriptions in JSON
     with open('standard.JSON', 'r') as f:
         data = dict(json.load(f))
 

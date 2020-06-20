@@ -15,73 +15,100 @@ import pylab
 path = 'temp/csv/'
 
 def smoothList(list):
+
+    # Moving average filter
     strippedXs=False
     degree=5
+
     if strippedXs == True:
         return Xs[0:-(len(list)-(len(list)-degree+1))]
+
     smoothed = [0]*(len(list)-degree+1)
+
     for i in range(len(smoothed)):
         smoothed[i] = sum(list[i:i+degree])/float(degree)
+
     return smoothed
 
 def smoothListTriangle(list):
+
+    # Averaging triangular filter
     strippedXs=False
     degree=5
     weight = []
     window = len(list)
     smoothed = [0.0]*(len(list)-window)
+
     for x in range(1, 2*degree):
         weight.append(degree-abs(degree-x))
+
     w = np.array(weight)
+
     for i in range(len(smoothed)):
         smoothed[i] = sum(np.array(list[i:i+window])*w)/float(sum(w))
+
     return smoothed
 
 def smoothListGaussian(list):
+
+    # Gaussian filter
     strippedXs=False
     degree=5
     window = degree*2-1
     weight = np.array([1.0]*window)
     weightGauss = []
+
     for i in range(window):
         i = i-degree+1
         frac = i/float(window)
         gauss = 1/(np.exp((4*(frac))**2))
         weightGauss.append(gauss)
+
     weight = np.array(weightGauss)*weight
     smoothed = [0.0]*(len(list)-window)
+
     for i in range(len(smoothed)):
         smoothed[i] = sum(np.array(list[i:i+window])*weight)/sum(weight)
+
     return smoothed
 
 
 def ord1(x, a, b):
+    # Linear
     return (a * x) + b
 
 def ord2(x, a, b, c):
+    # Quadratic
     return (a * (x**2)) + (b * x) + c
 
 def ord3(x, a, b, c, d):
+    # Cubic
     return (a * (x**3)) + (b * (x**2)) + (c * x) + d
 
 def expo(x, a, b, c):
+    # Exponential
     return a * np.exp(-b * x) + c
 
 def loga(x, a, b):
+    # Logarithm
   return a * np.log(x) + b
 
-def sinfn(x, a, b): 
+def sinfn(x, a, b):
+    # Sine
     return a * np.sin(b * x) 
 
 def cosfn(x, a, b): 
+    # Cosine
     return a * np.cos(b * x) 
 
 def tanfn(x, a, b): 
+    # Tangent
     return a * np.tan(b * x) 
 
 
 def r2ed(param, x, y):
 
+    # Coefficient of determination
     res = y - ord1(x, param[0], param[1])
     ss_res = np.sum(res**2)
     ss_tot = np.sum((y - np.mean(y))**2)
@@ -91,6 +118,7 @@ def r2ed(param, x, y):
 
 def graph_values(data):
 
+    # Strip graph values from audio
     vx = []
     vy = []
 
@@ -107,6 +135,7 @@ def graph_values(data):
 
 def sg_filter(x, y, n):
 
+    # Savitzky–Golay filter
     win_len = len(y)
     win_len = int(win_len / 5)
     if (win_len % 2) == 0:
@@ -127,6 +156,7 @@ def sg_filter(x, y, n):
 
 def best_fit(show, x, y):
 
+    # Fit graph to all functions
     rsquared = []
     polythresh = 0.95
 
@@ -226,6 +256,7 @@ def best_fit(show, x, y):
         rsquared.append(0)
         pass
 
+    # Identify best fit
     i, max_val = max(enumerate(rsquared), key=operator.itemgetter(1))
 
     # Cubic adjustment
@@ -241,6 +272,7 @@ def best_fit(show, x, y):
         if rsquared[0] >= polythresh:
             i = 0
 
+    # Plot
     if show == True:
         plt.plot(x, ord1_y, '-', color ='C2', label ="Linear")
         plt.plot(x, ord2_y, '-', color ='C3', label ="Quadratic")
@@ -258,7 +290,7 @@ def best_fit(show, x, y):
 
 def store_json(results):
 
-    #store = ["First order polynomial","Second order polynomial","Third order polynomial","Exponential cruve","Logarithmic curve","Sine function","Cosine function","Tangent function"]
+    # Store model function in JSON
     store = ["Linear function","Quadratic function","Cubic function","Exponential function","Logarithmic function","Sine function","Cosine function","Tangent function"]
 
     with open('temp/access.JSON', 'r') as f:
@@ -278,6 +310,7 @@ def get():
 
     print("pkg_GRAPH_INSIGHTS - Getting insights for graphs")
 
+    # Try for all graphs extracted
     results = []
     no_files = next(os.walk("temp/csv"))[2]
 

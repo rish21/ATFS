@@ -10,7 +10,7 @@ import time
 import json
 import csv
 import pytesseract
-#from pylanguagetool import api
+from pylanguagetool import api
 
 path = 'temp/scanned'
 
@@ -20,15 +20,14 @@ def tess_detect(img):
     # '--oem 1' for using LSTM OCR Engine
     config = ('-l eng --oem 1 --psm 3')
 
-    start = time.time()
-
+    # Get text 
     text = pytesseract.image_to_string(img, config=config)
-    
-    #print('It took', time.time()-start, 'seconds.')
 
     return text
 
 def boxes_char(img):
+    
+    # Draw boxes around each detected character
     h, w, c = img.shape
     boxes = pytesseract.image_to_boxes(img) 
     for b in boxes.splitlines():
@@ -42,6 +41,7 @@ def boxes_char(img):
 
 def boxes_words(img):
 
+    # Draw boxes around each detected word
     d = pytesseract.image_to_data(img, output_type='dict')
 
     n_boxes = len(d['text'])
@@ -57,6 +57,7 @@ def boxes_words(img):
 
 def correct(text):
 
+    # Autocorrect 
     correct = api.check(text, api_url='https://languagetool.org/api/v2/', lang='en-GB')
 
     while len(correct.get('matches')) < 0:
@@ -68,6 +69,7 @@ def correct(text):
         offset = correct.get('matches')[0]['context']['offset']
         length = correct.get('matches')[0]['context']['length']
 
+        # Make changes based on the suggested replacements
         if correct.get('matches')[0]['replacements'][0]['value'] == "":
             p1 = text[:offset+1]
             p2 = text[offset+length:]
@@ -77,6 +79,7 @@ def correct(text):
             p2 = text[offset+length:]
             text = p1 + chg + p2
 
+        # Check once again
         correct = api.check(text, api_url='https://languagetool.org/api/v2/', lang='en-GB')
 
     return correct
@@ -84,6 +87,7 @@ def correct(text):
 
 def store_json(store, check, data):
 
+    # Breakdown and store text in JSON
     with open('temp/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
@@ -114,6 +118,8 @@ def store_json(store, check, data):
 
 
 def check_table():
+
+    # Check to make sure text extracted is not from table
 
     line = ""
     check = False

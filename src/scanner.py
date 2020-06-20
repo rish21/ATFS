@@ -17,8 +17,8 @@ def run():
     #cap = cv2.VideoCapture(0)
     cap = cv2.VideoCapture('temp/feed.mp4')
     #cap.set(10,160)
-    imgw = 600
-    imgl = 800
+    #imgw = 600
+    #imgl = 800
     vidw = 640
     vidl = 480
     cont = True
@@ -118,39 +118,47 @@ def run():
             consistent = consistent + 1
             time.sleep(0.01)
             if consistent == 100:
+                print("")
                 p = Process(target = audio.go, args = ("key", "scanner_001"))
                 p.daemon = True
                 p.start()
             elif consistent >= 300:
+                # Document scanned and stored
                 cv2.imwrite("temp/scanned.jpg", identified_page)
                 cv2.destroyAllWindows()
                 audio.go("key", "scanner_002")
                 cont = False
         elif page_area <= perc_aim:
+            # Document is too small 
             consistent = 0
             p = Process(target = audio.go, args = ("key", "scanner_003"))
             p.daemon = True
             p.start()
-        else:
+        else:   
+            # Document cannot be found
             consistent = 0
             p = Process(target = audio.go, args = ("key", "scanner_004"))
             p.daemon = True
             p.start()
 
+
         # Close all windows with any keyboard press
         if cv2.waitKey(1) & 0xFF == ord('c'):
             cv2.destroyAllWindows()
             cap.release()
+            print("False")
             return False
         
+        # Timeout closure
         if time.time() - start >= 30:
             audio.go("key", "scanner_005")
             print(time.time() - start)
             cap.release()
+            print("False")
             return False
         
     cap.release()
-    
+    print("True")
     return True
 
 

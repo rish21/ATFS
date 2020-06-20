@@ -6,8 +6,10 @@ import speech_recognition as sr
 
 def get():
 
+	# Initialise
 	r = sr.Recognizer() 
 
+	# Recognise speech from microphone input
 	try: 
 		with sr.Microphone() as source2: 
 			
