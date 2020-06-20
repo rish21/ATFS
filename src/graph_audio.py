@@ -16,6 +16,7 @@ path = 'temp/csv/'
 
 def graph_values(data):
 
+    # Strip values from csv file
     vx = []
     vy = []
 
@@ -41,6 +42,7 @@ def graph_audio_values(x, y, fn):
     minx = x[0]
     miny = y[1]
 
+    # Find data range for graph
     for n, d in enumerate(x):
         if x[n] > maxx:
             maxx = x[n]
@@ -54,6 +56,7 @@ def graph_audio_values(x, y, fn):
     ragx = maxx - minx
     ragy = maxy - miny
 
+    # Store graph values based on window length
     counter = 0
     done = False
     while done == False:
@@ -65,6 +68,7 @@ def graph_audio_values(x, y, fn):
             done = True
             pass
     
+    # Store for later use
     store_json(len(valx), fn)
 
     return valx, valy, ragx, ragy
@@ -72,6 +76,7 @@ def graph_audio_values(x, y, fn):
 
 def store_json(insert, n):
 
+    # Store new graph window based values
     with open('temp/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
@@ -86,6 +91,7 @@ def store_json(insert, n):
 
 def graph_audio_point(valx, valy, maxx, maxy, p, n):
 
+    # Synthesis graph data points
     synth = chippy.Synthesizer(framerate=44100)
     loc = "temp/audio/"
 
@@ -101,34 +107,39 @@ def graph_audio_point(valx, valy, maxx, maxy, p, n):
 
 def graph_audio_full(valx, valy, maxx, maxy, n):
 
+    # Synthesis whole graph
     synth = chippy.Synthesizer(framerate=44100)
     once = False
     loc = "temp/audio/"
 
+    # First point
     fp = 2000 * (float(valx[0]) / float(maxx))
     ap = 1 * (float(valy[0]) / float(maxy))
-    sine_wave = synth.sine_pcm(length=1, frequency=fp, amplitude=ap)
+    sine_wave = synth.sine_pcm(length=0.2, frequency=fp, amplitude=ap)
     synth.save_wave(sine_wave, loc + "temp_p"  + str(n) + ".wav")
 
+    # Remaining points
     for v in range(1, len(valx) - 1):
 
         fn = 2000 * (float(valx[v]) / float(maxx))
         an = 20 * (float(valy[v]) / float(maxy))
-        sine_wave = synth.sine_pcm(length=0.1, frequency=fn, amplitude=an)
+        sine_wave = synth.sine_pcm(length=0.2, frequency=fn, amplitude=an)
         synth.save_wave(sine_wave, loc + "temp_n" + str(n) + ".wav")
 
         if once == False:
             temp_prev = AudioSegment.from_wav(loc + "temp_p"  + str(n) + ".wav")
             temp_next = AudioSegment.from_wav(loc + "temp_n" + str(n) + ".wav")
 
-            combined_sounds = temp_prev + temp_next
+            #combined_sounds = temp_prev + temp_next
+            combined_sounds = temp_prev.append(temp_next)
             combined_sounds.export(loc + "final"  + str(n) + ".wav", format="wav")
             once = True
         else:
             temp_prev = AudioSegment.from_wav(loc + "final"  + str(n) + ".wav")
             temp_next = AudioSegment.from_wav(loc + "temp_n" + str(n) + ".wav")
 
-            combined_sounds = temp_prev + temp_next
+            #combined_sounds = temp_prev + temp_next
+            combined_sounds = temp_prev.append(temp_next)
             combined_sounds.export(loc + "final"  + str(n) + ".wav", format="wav")
 
 
@@ -138,26 +149,27 @@ def get(select, p):
 
     no_files = next(os.walk(path))[2]
 
-    #try:
-    for n, f in enumerate(no_files):
+    # Run for all graphs extracted
+    try:
+        for n, f in enumerate(no_files):
 
-        filePath = path + str(n) + '.csv'
+            filePath = path + str(n) + '.csv'
 
-        with open(filePath, newline='') as csvfile:
-            im = csv.reader(csvfile, delimiter=' ', quotechar='|')
-            data = list(im)
+            with open(filePath, newline='') as csvfile:
+                im = csv.reader(csvfile, delimiter=' ', quotechar='|')
+                data = list(im)
 
-        valx, valy = graph_values(data)
+            valx, valy = graph_values(data)
 
-        vx, vy, ragx, ragy = graph_audio_values(valx, valy, n)
+            vx, vy, ragx, ragy = graph_audio_values(valx, valy, n)
 
-        if select == 0:
-            graph_audio_full(vx, vy, ragx, ragy, n)
-        elif select == 1:
-            graph_audio_point(vx, vy, ragx, ragy, p, n)
+            if select == 0:
+                graph_audio_full(vx, vy, ragx, ragy, n)
+            elif select == 1:
+                graph_audio_point(vx, vy, ragx, ragy, p, n)
 
-    #except:
-    #    print("ERR - Invalid file")
+    except:
+        print("ERR - Invalid file")
 
 
 if __name__ == '__main__': 
