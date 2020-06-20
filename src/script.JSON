@@ -1,13 +1,13 @@
 {
     "main_001": "Hello, please wait one moment while the system starts up",
     "main_002": "Press A to begin scanning a new page, or press Y to access stored material",
-    "main_003": "To start analysing the page press X",
+    "main_003": "To start extracting the page press X",
     "main_004": "The system is now shutting down",
     "main_005": "The information in the document will now be extracted",
     "main_006": "Please try and scan a document first before extracting information",
-    "main_007": "Please try scan and extract a document first, before loading new information",
-    "main_008": "Main Menu",
-    "main_009": "To access the document just scanned, press B, otherwise, press Y to access stored documents",
+    "main_007": "Please try scan and extract a document first, before accessing the new document",
+    "main_008": "You are now at the main menu",
+    "main_009": "To access the document just scanned and extracted, press B, otherwise, press Y to access stored documents",
     "main_010": "The document was not scanned, please try again by pressing A",
     "main_011": "The information was not extracted, please try again by pressing X",
     "scanner_001": "The page has been found, please hold steady",
@@ -53,5 +53,4 @@
     "access_032": "To change the gender, please say male or female",
     "access_033": "If you would like to change the speech rate, please press B",
     "access_034": "To change the speech rate, please say a number between 0.25 and 4. It is recommended that it be kept between 1."
-    
 }
