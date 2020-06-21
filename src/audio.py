@@ -6,16 +6,19 @@ import pygame
 import json
 import ttos
 
+
 def go(det, value):
 
     # Get speech from script 
     if det == "key":
         with open('script.JSON', 'r') as f:
             script = dict(json.load(f))
+            guisett("speech", script)
             ttos.go(script[value], False)
             play("temp/audio/ttos.wav")
     elif det == "raw":
         # RAW speech
+        guisett("speech", value)
         ttos.go(value, False)
         play("temp/audio/ttos.wav")
     elif det == "equ":
@@ -30,7 +33,7 @@ def go(det, value):
 
     return
 
-# Play audio file to speakers
+
 def play(file):
     
     print("pkg_AUDIO - Playing audio")
@@ -44,6 +47,20 @@ def play(file):
         continue
 
     return
+
+
+def guisett(key, val):
+
+    with open('gui.JSON', 'r') as f:
+        data = dict(json.load(f))
+    
+    data[key] = val
+
+    with open('gui.JSON', 'w') as n:
+        json.dump(data, n, indent=4, sort_keys=False)
+
+    return
+
 
 if __name__ == '__main__':
 

@@ -17,37 +17,61 @@ def CallBackS(controlId, value):
 
     # Window (A)
     if controlId == 6 and value == 0:
+        guisett("a","green")
+        time.sleep(0.2)
+        guisett("a","red")
         s_window = True
         
     # Gender (X)
     if controlId == 8 and value == 0:
+        guisett("x","green")
+        time.sleep(0.2)
+        guisett("x","red")
         s_gender = True
 
     # Speaking Rate (B)
     if controlId == 7 and value == 0:
-       s_speakrate = True
+        guisett("b","green")
+        time.sleep(0.2)
+        guisett("b","red")
+        s_speakrate = True
 
     # DPad
     if controlId == 17:
         if value[1] == -1:
+            guisett("dd","green")
+            time.sleep(0.2)
+            guisett("dd","red")
             #print("down")
             pointer_ud[0] = pointer_ud[1]
             pointer_ud[1] = pointer_ud[1] - 1
         elif value[1] == 1:
+            guisett("du","green")
+            time.sleep(0.2)
+            guisett("du","red")
             #print("up")
             pointer_ud[0] = pointer_ud[1]
             pointer_ud[1] = pointer_ud[1] + 1
         elif value[0] == -1:
+            guisett("dl","green")
+            time.sleep(0.2)
+            guisett("dl","red")
             #print("left")
             pointer_lr[0] = pointer_lr[1]
             pointer_lr[1] = pointer_lr[1] - 1
         elif value[0] == 1:
+            guisett("dr","green")
+            time.sleep(0.2)
+            guisett("dr","red")
             #print("right")
             pointer_lr[0] = pointer_lr[1]
             pointer_lr[1] = pointer_lr[1] + 1
 
     # Stop program (BACK)
     if controlId == 12 and value == 0:
+        guisett("back","green")
+        time.sleep(0.2)
+        guisett("back","red")
         back = True
 
     return
@@ -170,6 +194,19 @@ def speakrate(path):
 
     return
 
+
+def guisett(key, val):
+
+    with open('gui.JSON', 'r') as f:
+        data = dict(json.load(f))
+    
+    data[key] = val
+
+    with open('gui.JSON', 'w') as n:
+        json.dump(data, n, indent=4, sort_keys=False)
+
+    return
+
     
 def begin(path):
 
@@ -192,6 +229,8 @@ def begin(path):
         invertYAxis = False)
 
     xboxContS.start()
+
+    guisett("loc","settings")
 
     audio.go("key", "access_026")
 

@@ -10,8 +10,8 @@ import json
 with open('standard.JSON', 'r') as f:
         data = dict(json.load(f))
 
-idd = data["keys"]["mathpix_id"]
-key = data["keys"]["mathpix_key"]
+idd = data["keys"][0]["mathpix_id"]
+key = data["keys"][0]["mathpix_key"]
 
 path = 'temp/blocks/'
 

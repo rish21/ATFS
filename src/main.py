@@ -10,6 +10,7 @@ import access
 import concurrent.futures
 
 import gui
+import time
 import os
 import json
 from multiprocessing import Process
@@ -22,18 +23,30 @@ def CallBackM(controlId, value):
 
     # Scan new document (A)
     if controlId == 6 and value == 0:
+        guisett("a","green")
+        time.sleep(0.2)
+        guisett("a","red")
         m_scan = True
         
     # Run extraction if a document has been scanned (X)
-    if controlId == 8 and value == 0 and ext_flag == True:
+    if controlId == 8 and value == 0:
+        guisett("x","green")
+        time.sleep(0.2)
+        guisett("x","red")
         m_extract = True
 
     # Access current scanned document (B)
-    if controlId == 7 and value == 0 and load_flag == True:
+    if controlId == 7 and value == 0:
+        guisett("b","green")
+        time.sleep(0.2)
+        guisett("b","red")
         m_access = True
 
     # Access old scanned documents (Y)
     if controlId == 9 and value == 0:
+        guisett("y","green")
+        time.sleep(0.2)
+        guisett("y","red")
         if m_access_old == False:
             m_access_old = True
         else:
@@ -42,25 +55,39 @@ def CallBackM(controlId, value):
     # DPad
     if controlId == 17:
         if value[1] == -1:
+            guisett("dd","green")
+            time.sleep(0.2)
+            guisett("dd","red")
             #print("down")
             pointer_ud[0] = pointer_ud[1]
             pointer_ud[1] = pointer_ud[1] - 1
         elif value[1] == 1:
+            guisett("du","green")
+            time.sleep(0.2)
+            guisett("du","red")
             #print("up")
             pointer_ud[0] = pointer_ud[1]
             pointer_ud[1] = pointer_ud[1] + 1
         elif value[0] == -1:
+            guisett("dl","green")
+            time.sleep(0.2)
+            guisett("dl","red")
             #print("left")
             pointer_lr[0] = pointer_lr[1]
             pointer_lr[1] = pointer_lr[1] - 1
         elif value[0] == 1:
+            guisett("dr","green")
+            time.sleep(0.2)
+            guisett("dr","red")
             #print("right")
             pointer_lr[0] = pointer_lr[1]
             pointer_lr[1] = pointer_lr[1] + 1
 
-
     # Stop program (BACK)
     if controlId == 12 and value == 0:
+        guisett("back","green")
+        time.sleep(0.2)
+        guisett("back","red")
         back = True
 
     return
@@ -69,7 +96,10 @@ def CallBackM(controlId, value):
 def scan(xboxContM):
 
     global m_scan, ext_flag
-  
+
+    os.system("gnome-terminal -- python scanner.py")
+    
+    """
     # Run document scanning
     with concurrent.futures.ThreadPoolExecutor() as executor:
         future = executor.submit(scanner.run,)
@@ -81,7 +111,7 @@ def scan(xboxContM):
     else:
         # Scan unsuccessful
         audio.go("key", "main_010")
-
+    """
     m_scan = False
 
     return
@@ -90,6 +120,14 @@ def scan(xboxContM):
 def extract():
 
     global m_extract, load_flag
+
+    ext_flag = os.path.isfile('temp/scanned.jpg')
+    if ext_flag == True:
+        # Scan successful 
+        audio.go("key", "main_003")
+    else:
+        # Scan unsuccessful
+        audio.go("key", "main_010")
 
     if ext_flag == True:
         # Extract information from document 
@@ -109,7 +147,7 @@ def extract():
 
     m_extract = False
 
-    return path
+    return
 
 
 def access_n(path):
@@ -178,6 +216,7 @@ def access_o():
         else:
             # Document not scanned or extracted
             audio.go("key", "main_007")
+            break
 
     audio.go("key", "main_008")
     m_access_old = False
@@ -187,12 +226,25 @@ def access_o():
     return
 
 
+def guisett(key, val):
+
+    with open('gui.JSON', 'r') as f:
+        data = dict(json.load(f))
+    
+    data[key] = val
+
+    with open('gui.JSON', 'w') as n:
+        json.dump(data, n, indent=4, sort_keys=False)
+
+    return
+
+    
 if __name__ == '__main__':
 
     #audio.go("key", "main_001")
     
     # Declare and initialise 
-    global back, select, ext_flag, load_flag, path, pointer_ud, pointer_lr, m_scan, m_extract, m_access, m_access_old
+    global back, select, path, ext_flag, load_flag, path, pointer_ud, pointer_lr, m_scan, m_extract, m_access, m_access_old
     pointer_ud = [-1, -1]
     pointer_lr = [-1, -1]
     back = False
@@ -206,8 +258,11 @@ if __name__ == '__main__':
     path = ""
 
     # GUI
-    #p = Process(target=gui.run, args=(True,))
-    #p.start()
+    p = Process(target=gui.run, args=(True,))
+    p.start()
+    guisett("loc","main")
+    guisett("speech", "")
+    guisett("microphone", "")
 
     xboxContM = XboxController.XboxController(
         controllerCallBack = CallBackM,
@@ -227,7 +282,7 @@ if __name__ == '__main__':
             scan(xboxContM)
 
         if m_extract == True:
-            path = extract()
+            extract()
 
         if m_access == True:
             access_n(path)

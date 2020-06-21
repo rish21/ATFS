@@ -3,6 +3,7 @@
 
 # Imports
 import speech_recognition as sr 
+import json
 
 def get():
 
@@ -19,6 +20,8 @@ def get():
 			
 			text = r.recognize_google(audio2) 
 			text = text.lower() 
+
+			guisett("microphone", text)
 		
 	except sr.RequestError as e: 
 		print("Could not request results; {0}".format(e)) 
@@ -27,6 +30,19 @@ def get():
 		print("unknown error occured") 
 
 	return text
+
+
+def guisett(key, val):
+
+    with open('gui.JSON', 'r') as f:
+        data = dict(json.load(f))
+    
+    data[key] = val
+
+    with open('gui.JSON', 'w') as n:
+        json.dump(data, n, indent=4, sort_keys=False)
+
+    return
 
 
 if __name__ == '__main__':

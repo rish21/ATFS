@@ -114,11 +114,9 @@ def run():
         # Save the images that need to be used further based on area percentage
         # Give feedback if the page has been found, too far away, or if it cannot be found
         if page_area >= perc_aim:
-            print(consistent)
             consistent = consistent + 1
             time.sleep(0.01)
             if consistent == 100:
-                print("")
                 p = Process(target = audio.go, args = ("key", "scanner_001"))
                 p.daemon = True
                 p.start()
@@ -128,7 +126,7 @@ def run():
                 cv2.destroyAllWindows()
                 audio.go("key", "scanner_002")
                 cont = False
-        elif page_area <= perc_aim:
+        elif page_area <= perc_aim and time.time() - start >= 5:
             # Document is too small 
             consistent = 0
             p = Process(target = audio.go, args = ("key", "scanner_003"))
@@ -152,7 +150,6 @@ def run():
         # Timeout closure
         if time.time() - start >= 30:
             audio.go("key", "scanner_005")
-            print(time.time() - start)
             cap.release()
             print("False")
             return False
@@ -177,7 +174,4 @@ def show(frame, edge, threshold, image, identified_page, baw):
 if __name__ == '__main__':
 
     run()
-
-    while True:
-        pass
 

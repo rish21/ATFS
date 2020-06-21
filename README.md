@@ -17,7 +17,9 @@ The WHO reports with confidence that there are currently over 2 billion people i
 
 Python3.6 and an Xbox 360 Controller are **necessary** to run and operate this system.
 
-The `requirements.txt` file should list all Python dependencies, and they should be installed using:
+Please place your Google Cloud Service Account Key within `documents` and place your Mathpix and ExtractTable/CamelotPro IDD and Key within the `src/standard.JSON` file.
+
+The `requirements.txt` file lists all Python dependencies, and they should be installed using:
 
 ```python
 pip install -r requirements.txt

@@ -105,7 +105,7 @@ def store_json(store, check, data):
             passes = passes + 1
             pass
         else:
-            data["page"][0]["text"].append({"full_text": "","nlp":[],"sentences": []})
+            data["page"][0]["text"].append({"full_text": "","sentences": []})
             c = re.sub('\n', ' ', c)
             data["page"][0]["text"][A - passes]["full_text"] = c
             sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', c)

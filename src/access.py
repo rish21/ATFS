@@ -22,10 +22,16 @@ def CallBackA(controlId, value):
 
     # Tables (A)
     if controlId == 6 and value == 0:
+        guisett("a","green")
+        time.sleep(0.2)
+        guisett("a","red")
         a_tables = True
         
     # Graphs (X)
     if controlId == 8 and value == 0:
+        guisett("x","green")
+        time.sleep(0.2)
+        guisett("x","red")
         if a_graphs == False:
             a_graphs = True
         else:
@@ -33,14 +39,23 @@ def CallBackA(controlId, value):
 
     # Equations (B)
     if controlId == 7 and value == 0:
+        guisett("b","green")
+        time.sleep(0.2)
+        guisett("b","red")
         a_equations = True
 
     # Images (Y)
     if controlId == 9 and value == 0:
+        guisett("y","green")
+        time.sleep(0.2)
+        guisett("y","red")
         a_images = True
 
     # Text (Lshoulder)
     if controlId == 10 and value == 0:
+        guisett("lb","green")
+        time.sleep(0.2)
+        guisett("lb","red")
         if a_text == False:
             a_text = True
         else:
@@ -48,33 +63,54 @@ def CallBackA(controlId, value):
     
     # Setings (Rshoulder)
     if controlId == 11 and value == 0:
+        guisett("rb","green")
+        time.sleep(0.2)
+        guisett("rb","red")
         a_settings = True
 
     # DPad
     if controlId == 17:
         if value[1] == -1:
+            guisett("dd","green")
+            time.sleep(0.2)
+            guisett("dd","red")
             #print("down")
             pointer_ud[0] = pointer_ud[1]
             pointer_ud[1] = pointer_ud[1] - 1
         elif value[1] == 1:
+            guisett("du","green")
+            time.sleep(0.2)
+            guisett("du","red")
             #print("up")
             pointer_ud[0] = pointer_ud[1]
             pointer_ud[1] = pointer_ud[1] + 1
         elif value[0] == -1:
+            guisett("dl","green")
+            time.sleep(0.2)
+            guisett("dl","red")
             #print("left")
             pointer_lr[0] = pointer_lr[1]
             pointer_lr[1] = pointer_lr[1] - 1
         elif value[0] == 1:
+            guisett("dr","green")
+            time.sleep(0.2)
+            guisett("dr","red")
             #print("right")
             pointer_lr[0] = pointer_lr[1]
             pointer_lr[1] = pointer_lr[1] + 1
 
     # Stop program (BACK)
     if controlId == 12 and value == 0:
+        guisett("back","green")
+        time.sleep(0.2)
+        guisett("back","red")
         back = True
 
     # Add Notes (XBOX)
     if controlId == 8 and value == 0:
+        guisett("xbox","green")
+        time.sleep(0.2)
+        guisett("xbox","red")
         if a_notes == False:
             a_notes = True
         else:
@@ -82,6 +118,9 @@ def CallBackA(controlId, value):
 
     # Right Joystick Push - Swap table columns and rows
     if controlId == 16 and value == 0:
+        guisett("rt","green")
+        time.sleep(0.2)
+        guisett("rt","red")
         if swap == False:
             swap = True
             ignore = True
@@ -591,6 +630,19 @@ def text(path):
     audio.go("key", "access_008")
     a_text = False
     back = False
+
+    return
+
+
+def guisett(key, val):
+
+    with open('gui.JSON', 'r') as f:
+        data = dict(json.load(f))
+    
+    data[key] = val
+
+    with open('gui.JSON', 'w') as n:
+        json.dump(data, n, indent=4, sort_keys=False)
 
     return
 

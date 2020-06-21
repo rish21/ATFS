@@ -21,6 +21,8 @@ import json
 
 def run():
 
+    guisett("loc","extraction")
+
     #audio.go("key", "extraction_001")
     startt = time.time()
 
@@ -94,6 +96,7 @@ def run():
 
     return True, path
 
+
 def store():
 
     # Number of documents stored
@@ -131,6 +134,19 @@ def store():
             shutil.copy2(s, d)
 
     return path
+
+
+def guisett(key, val):
+
+    with open('gui.JSON', 'r') as f:
+        data = dict(json.load(f))
+    
+    data[key] = val
+
+    with open('gui.JSON', 'w') as n:
+        json.dump(data, n, indent=4, sort_keys=False)
+
+    return
 
 
 if __name__ == '__main__':
