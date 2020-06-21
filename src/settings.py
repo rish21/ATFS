@@ -221,6 +221,8 @@ def begin(path):
     s_speakrate = False
     select = False
 
+    guisett("loc","settings")
+
     xboxContS = XboxController.XboxController(
         controllerCallBack = CallBackS,
         joystickNo = 0,
@@ -229,8 +231,6 @@ def begin(path):
         invertYAxis = False)
 
     xboxContS.start()
-
-    guisett("loc","settings")
 
     audio.go("key", "access_026")
 

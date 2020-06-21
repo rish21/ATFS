@@ -663,6 +663,8 @@ def begin(path):
     a_settings = False
     select = False
 
+    guisett("loc","access")
+
     xboxContA = XboxController.XboxController(
         controllerCallBack = CallBackA,
         joystickNo = 0,
