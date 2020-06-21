@@ -95,21 +95,24 @@ def store_json(store, check, data):
     store = re.split('\n\n', store)
 
     data["page"][0]["description"] = desc
+    passes = 0
 
     for A,  c in enumerate(store):
         if check == True and c == data:
+            passes = passes + 1
             pass
-        elif c == "" and c == " ":
+        elif c == "" or c == " ":
+            passes = passes + 1
             pass
         else:
             data["page"][0]["text"].append({"full_text": "","nlp":[],"sentences": []})
             c = re.sub('\n', ' ', c)
-            data["page"][0]["text"][A]["full_text"] = c
+            data["page"][0]["text"][A - passes]["full_text"] = c
             sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', c)
 
             for B, s in enumerate(sentences):
-                data["page"][0]["text"][A]["sentences"].append({"text": "","highlighted": ""})
-                data["page"][0]["text"][A]["sentences"][B]["text"] = s
+                data["page"][0]["text"][A - passes]["sentences"].append({"text": "","highlighted": ""})
+                data["page"][0]["text"][A - passes]["sentences"][B]["text"] = s
 
     with open('temp/access.JSON', 'w') as n:
         json.dump(data, n, indent=4, sort_keys=False)
