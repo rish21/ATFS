@@ -51,7 +51,7 @@ def get():
 def store_json(results):
 
     # Store image descriptions in JSON
-    with open('standard.JSON', 'r') as f:
+    with open('temp/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
     for n, r in enumerate(results):

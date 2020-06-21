@@ -1,0 +1,201 @@
+{
+    "page": [
+        {
+            "bookmarked": "",
+            "topic": "",
+            "description": "This will result in the maximum flow of current and the above equation can be written as: -  E =Ir  In an open circuit, when no load (external) resistor is connected, no current will be flowing and no energy is wasted.\nA voltmeter measures the voltage across the cell as 1.4 V.",
+            "notes": [],
+            "image_results": [
+                {
+                    "0": "diagram"
+                }
+            ],
+            "graph_results": [],
+            "equations": [
+                {
+                    "0": "r = \\frac { 0.1 } { 0.05 } = 2 \\Omega"
+                },
+                {
+                    "1": "I = \\frac { V } { R } = \\frac { 1.4 } { 28 } = 0.05 A"
+                },
+                {
+                    "2": "r = \\frac { \\text {lost volts} } { I } = \\frac { 0.1 } { I }"
+                },
+                {
+                    "3": "= I r = E - V = 1.5 - 1.4 = 0.1 V"
+                },
+                {
+                    "4": "E = I r + I R = I r + V"
+                },
+                {
+                    "5": "E = I ( R + r )"
+                },
+                {
+                    "6": "E = IR + Ir"
+                }
+            ],
+            "text": [
+                {
+                    "full_text": "Higher \u2014 Electricity - Summary Notes",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "Higher \u2014 Electricity - Summary Notes",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "E=IR + Ir This equation is usually written as: - E=I1(R+1r)",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "E=IR + Ir This equation is usually written as: - E=I1(R+1r)",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "In a short circuit, which is usually created using a short thick wire, R = 0. This will result in the maximum flow of current and the above equation can be written as: -",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "In a short circuit, which is usually created using a short thick wire, R = 0.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "This will result in the maximum flow of current and the above equation can be written as: -",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "E =Ir",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "E =Ir",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "In an open circuit, when no load (external) resistor is connected, no current will be flowing and no energy is wasted. This means that the e.m.f. will be equal to the t.p.d..",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "In an open circuit, when no load (external) resistor is connected, no current will be flowing and no energy is wasted.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "This means that the e.m.f. will be equal to the t.p.d..",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "Example",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "Example",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "A cell of emf. 1.5 Vis connected in series with a 28Q resistor.",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "A cell of emf.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "1.5 Vis connected in series with a 28Q resistor.",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "A voltmeter measures the voltage across the cell as 1.4 V.",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "A voltmeter measures the voltage across the cell as 1.4 V.",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "Calculate: (a) the internal resistance of the cell",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "Calculate: (a) the internal resistance of the cell",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "(B) the current if the cell terminals are short circuited (c) the lost volts if the external resistance is increased to 58Q.",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "(B) the current if the cell terminals are short circuited (c) the lost volts if the external resistance is increased to 58Q.",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "(a) E=Ir+IR=Ir+V Lost volts = Ir =E-V=1.5-14=0.1V",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "(a) E=Ir+IR=Ir+V Lost volts = Ir =E-V=1.5-14=0.1V",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "re lost volts _ Ol",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "re lost volts _ Ol",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "F 7 tee = Loos R 2 _ | _35 0.05",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "F 7 tee = Loos R 2 _ | _35 0.05",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "Mr Downie 2019 10",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "Mr Downie 2019 10",
+                            "highlighted": ""
+                        }
+                    ]
+                }
+            ],
+            "misc": []
+        }
+    ],
+    "settings": [
+        {
+            "window": 2,
+            "gender": "female",
+            "speaking_rate": 1.1
+        }
+    ]
+}

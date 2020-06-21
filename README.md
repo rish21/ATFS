@@ -5,6 +5,7 @@
 #### An MEng Individual Project for the degree of Electrical and Electronic Engineering with Management
 #### Imperial College London
 #### Department of Electrical and Electronic Engineering
+#### Summer of 2020
 
 ---
 

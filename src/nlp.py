@@ -40,7 +40,7 @@ def content_analysis():
         print("No response")
         pass
 
-    return response.categories[0]
+    return
 
 
 def summ():

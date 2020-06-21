@@ -78,7 +78,6 @@ def get_graph(item):
 
     # Capture the item from the page and remove it from the original
     for sc in sort_cnts:
-        #if cv2.contourArea(sc) >= 100000 and cv2.contourArea(sc) <= 7000000:
         if cv2.contourArea(sc) >= 200000 and cv2.contourArea(sc) <= 250000:
             x,y,w,h = cv2.boundingRect(sc)
             points = []
@@ -108,15 +107,15 @@ def get():
 
     print("pkg_ITEMS - Extracting graphs and images")
 
-    get_graph("images")
-    #get_graph("graph")
+    #get_graph("images")
+    get_graph("graphs")
 
     return
 
 
 if __name__ == '__main__':
 
-    get_graph("images")
+    get()
 
     #cv2.imshow('remove', image)
     #cv2.imshow('thresh', thresh)

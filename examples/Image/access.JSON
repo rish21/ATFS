@@ -1,0 +1,151 @@
+{
+    "page": [
+        {
+            "bookmarked": "",
+            "topic": " Health Health Conditions Infectious Diseases",
+            "description": "Some parasites in the blood stage switch to sexual reproduction to produce gametocytes for the subsequent transmission of the infection to the next mosquito  (Klein, 2013).\n2. Sporozoites reproduce asexually to form merozoites in liver schizonts.\nThe intricacy of the malaria parasite life cycle makes the development of vaccines increasingly difficult.",
+            "notes": [],
+            "image_results": [
+                {
+                    "0": "biorender"
+                }
+            ],
+            "graph_results": [],
+            "equations": [],
+            "text": [
+                {
+                    "full_text": "is an exponential increase in parasite population which results in the clinical symptoms of malaria such as fever. Some parasites in the blood stage switch to sexual reproduction to produce gametocytes for the subsequent transmission of the infection to the next mosquito",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "is an exponential increase in parasite population which results in the clinical symptoms of malaria such as fever.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "Some parasites in the blood stage switch to sexual reproduction to produce gametocytes for the subsequent transmission of the infection to the next mosquito",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "(Klein, 2013).",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "(Klein, 2013).",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "Figure 1: Malaria parasite life cycle. A) Infection by Anopheles mosquito during blood meal, injection of sporozoites (parasite). 1. Sporozoites invade hepatocytes in the liver. 2. Sporozoites reproduce asexually to form merozoites in liver schizonts. 3. Liver schizonts rupture to release merozoites into the bloodstream. 4. Merozoites invade red blood cells and reproduce mitotically. Asexual reproduction during the blood stage has different forms: ring form and trophozoites. 5. Some merozoites switch into the sexual stage to develop into gametocytes. B) The gametocytes are ingested by the next mosquito to continue the transmission cycle.",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "Figure 1: Malaria parasite life cycle.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "A) Infection by Anopheles mosquito during blood meal, injection of sporozoites (parasite).",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "1.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "Sporozoites invade hepatocytes in the liver.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "2.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "Sporozoites reproduce asexually to form merozoites in liver schizonts.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "3.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "Liver schizonts rupture to release merozoites into the bloodstream.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "4.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "Merozoites invade red blood cells and reproduce mitotically.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "Asexual reproduction during the blood stage has different forms: ring form and trophozoites.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "5.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "Some merozoites switch into the sexual stage to develop into gametocytes.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "B) The gametocytes are ingested by the next mosquito to continue the transmission cycle.",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "The intricacy of the malaria parasite life cycle makes the development of vaccines increasingly difficult. RT'S,S/ASO1, the most advanced vaccine candidate, has recently been",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "The intricacy of the malaria parasite life cycle makes the development of vaccines increasingly difficult.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "RT'S,S/ASO1, the most advanced vaccine candidate, has recently been",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "launched in Malawi for its pilot programme. Despite its shortcomings of only providing",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "launched in Malawi for its pilot programme.",
+                            "highlighted": ""
+                        },
+                        {
+                            "text": "Despite its shortcomings of only providing",
+                            "highlighted": ""
+                        }
+                    ]
+                },
+                {
+                    "full_text": "partial prevention against malaria this is currently the only vaccine which has passed",
+                    "nlp": [],
+                    "sentences": [
+                        {
+                            "text": "partial prevention against malaria this is currently the only vaccine which has passed",
+                            "highlighted": ""
+                        }
+                    ]
+                }
+            ],
+            "misc": []
+        }
+    ],
+    "settings": [
+        {
+            "window": 2,
+            "gender": "female",
+            "speaking_rate": 1.1
+        }
+    ]
+}

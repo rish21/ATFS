@@ -123,7 +123,7 @@ def graph_values(data):
     vy = []
 
     for d in data:
-        if float(d[1]) >= 1:
+        if float(d[1]) <= 25:
             vx.append(d[0])
             vy.append(d[1])
         
@@ -137,7 +137,7 @@ def sg_filter(x, y, n):
 
     # Savitzky–Golay filter
     win_len = len(y)
-    win_len = int(win_len / 5)
+    win_len = int(win_len / 2)
     if (win_len % 2) == 0:
         win_len = win_len -1
 
@@ -145,7 +145,7 @@ def sg_filter(x, y, n):
     fy = savgol_filter(y, win_len, 1)
 
     fx = np.around(fx,decimals=5)
-    fy = np.around(fx,decimals=5)
+    fy = np.around(fx,decimals=2)
 
     data = np.column_stack((x, fy))
 
@@ -327,7 +327,7 @@ def get():
             #plt.plot(valx, valy, 'o', color ='C0', label ="Raw Data", markersize=2) 
 
             x, y = sg_filter(valx, valy, n)
-            #plt.plot(x, y, 'o', color ='C1', label ="Savgol Filter", markersize=2) 
+            #plt.plot(valx, y, 'o', color ='C1', label ="Savgol Filter", markersize=2) 
             
             """
             y = smoothList(valy)
@@ -343,12 +343,12 @@ def get():
             #plt.legend() 
             #plt.show() 
 
-            results.append(best_fit(False, x, valy))
+            results.append(best_fit(False, valx, valy))
                     
         store_json(results)
 
     except:
-        print("ERR - Invalid file")
+        print("ERR - No result")
 
 
 if __name__ == '__main__':

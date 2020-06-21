@@ -345,7 +345,7 @@ def get():
     for n, f in enumerate(no_files):
 
         global use_file, save_file
-        use_file = 'temp/blocks/graphs/' + str(n) + '.png'
+        use_file = 'temp/blocks/graphs/' + str(n) + '.jpg'
         save_file = 'temp/csv/' + str(n) + '.csv'
 
         main(sys.argv[:])

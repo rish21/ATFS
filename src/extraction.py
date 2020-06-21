@@ -16,19 +16,26 @@ import nlp
 import os
 import shutil
 import glob
+import json
 
 
 def run():
 
-    audio.go("key", "extraction_001")
+    #audio.go("key", "extraction_001")
     startt = time.time()
+
+    with open('standard.JSON', 'r') as f:
+        data = dict(json.load(f))
+
+    with open('temp/access.JSON', 'w') as n:
+        json.dump(data, n, indent=4, sort_keys=False)
 
     try:
         # Set true if debugging information is required
         info = False
 
         # Step 1 - Extract tables from page
-        #tables.get(info)
+        tables.get(info)
         print('Tables - It took', time.time()-startt, 'seconds.')
         start = time.time()
 
@@ -47,7 +54,7 @@ def run():
         print('Graph - It took', time.time()-start, 'seconds.')
         start = time.time()
 
-        audio.go("key", "extraction_002")
+        #audio.go("key", "extraction_002")
 
         # Step 5 - Get insights for graph trends extracted
         graph_insights.get()
@@ -65,7 +72,7 @@ def run():
         start = time.time()
 
         # Step 7 - Extract equations
-        #equations.get()
+        equations.get()
         print('Equations - It took', time.time()-start, 'seconds.')
         start = time.time()
 
@@ -83,7 +90,7 @@ def run():
         return False
     
     print('Final - It took', time.time()-startt, 'seconds.')
-    audio.go("key", "extraction_003")
+    #audio.go("key", "extraction_003")
 
     return True, path
 
@@ -122,7 +129,6 @@ def store():
             shutil.copytree(s, d, False, None)
         else:
             shutil.copy2(s, d)
-
 
     return path
 

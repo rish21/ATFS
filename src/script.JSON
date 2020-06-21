@@ -15,7 +15,7 @@
     "scanner_003": "Try to bring the device closer to the page",
     "scanner_004": "Try to hold the device steady",
     "scanner_005": "The page could not be found, please try again",
-    "extraction_001": "Please wait while the the information is extracted, this can take up to 30 seconds",
+    "extraction_001": "Please wait while the information is extracted, this can take up to 30 seconds",
     "extraction_002": "There are roughly 15 seconds remaining",
     "extraction_003": "The document information has been successfully extracted",
     "extraction_004": "The document information failed to extract successfully, please try and re-scan the document or rerun the extraction",
