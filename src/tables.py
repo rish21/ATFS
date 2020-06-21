@@ -7,7 +7,8 @@ from camelot_pro import read_pdf
 import csv
 
 # API key for Camelot
-api_key = '44DOdk4yMG7m7v9pFmEpm3dxCW2QUm568mA0RbyG'
+#api_key = '44DOdk4yMG7m7v9pFmEpm3dxCW2QUm568mA0RbyG'
+api_key = 'YlCUSpXnnAaRekWBWKoUC9ZbSix9gbPJ48hGhUPc'
 
 def get(info):
 
@@ -15,7 +16,7 @@ def get(info):
 
     # Request for the tables from the page to be extracted and stored
     pro_tables = read_pdf('temp/scanned.jpg', flavor="CamelotPro", pro_kwargs={'api_key': api_key}) 
-    pro_tables.export('temp/csv/tables.csv', f='csv')
+    pro_tables.export('temp/csv/tables/tables.csv', f='csv')
 
     # Print out request information
     if info == True:
