@@ -15,7 +15,7 @@ The WHO reports with confidence that there are currently over 2 billion people i
 
 ##### Setup and Run
 
-This project was programmed using Python3.6.
+Python3.6 and an Xbox 360 Controller are _necessary_ to run and operate this system.
 
 The `requirements.txt` file should list all Python dependencies, and they should be installed using:
 
