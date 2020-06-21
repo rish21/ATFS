@@ -7,8 +7,11 @@ import os
 import json
 
 # Credentials
-idd = 'rmanjunatha2198_gmail_com_79187c'
-key = '859985511757a53ddc2b'
+with open('standard.JSON', 'r') as f:
+        data = dict(json.load(f))
+
+idd = data["keys"]["mathpix_id"]
+key = data["keys"]["mathpix_key"]
 
 path = 'temp/blocks/'
 

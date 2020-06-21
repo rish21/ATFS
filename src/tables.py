@@ -5,10 +5,13 @@
 from camelot_pro import check_usage
 from camelot_pro import read_pdf
 import csv
+import json
 
 # API key for Camelot
-#api_key = '44DOdk4yMG7m7v9pFmEpm3dxCW2QUm568mA0RbyG'
-api_key = 'YlCUSpXnnAaRekWBWKoUC9ZbSix9gbPJ48hGhUPc'
+with open('standard.JSON', 'r') as f:
+        data = dict(json.load(f))
+
+api_key = data["keys"]["camelot"]
 
 def get(info):
 

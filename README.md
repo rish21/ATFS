@@ -2,10 +2,10 @@
 
 ---
 
-#### An MEng Individual Project for the degree of Electrical and Electronic Engineering with Management
+#### An MEng Individual Project for the Degree of Electrical and Electronic Engineering with Management
 #### Imperial College London
 #### Department of Electrical and Electronic Engineering
-#### Summer of 2020
+#### Completed in the Summer of 2020
 
 ---
 
@@ -15,7 +15,7 @@ The WHO reports with confidence that there are currently over 2 billion people i
 
 ##### Setup and Run
 
-Python3.6 and an Xbox 360 Controller are _necessary_ to run and operate this system.
+Python3.6 and an Xbox 360 Controller are **necessary** to run and operate this system.
 
 The `requirements.txt` file should list all Python dependencies, and they should be installed using:
 
