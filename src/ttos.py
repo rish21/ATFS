@@ -20,7 +20,7 @@ def ssml_to_speech(ssml_text):
     #sys.stdout = sys.__stdout__
 
     # Setup enviroment and instantiate client
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'/home/rishmanju/atfs/documents/static-forest-277817-d4e340a3e881.json'
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'/home/rishmanju/atfs/documents/static-forest-277817-f2630793d359.json'
     client = texttospeech.TextToSpeechClient()
 
     # Assigns input text
