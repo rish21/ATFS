@@ -17,7 +17,7 @@ def content_analysis():
     text = data["page"][0]["description"]
 
     # Setup enviroment and instantiate client
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'/home/rishmanju/fyp/Documents/static-forest-277817-8f7784197e5d.json'
+    
     client = language_v1.LanguageServiceClient()
 
     # Configuration settings (text type, language and request)
