@@ -21,9 +21,9 @@ Please place your Google Cloud Service Account Key within `src` and place your t
 
 You can get your keys here:
 
-Mathpix - https://dashboard.mathpix.com/ 
-CamelotPro/ExtractTable - https://extracttable.com/camelotpro.html 
-Google Cloud Service Account Key - https://cloud.google.com/iam/docs/creating-managing-service-account-keys 
+Mathpix - https://dashboard.mathpix.com/  
+CamelotPro/ExtractTable - https://extracttable.com/camelotpro.html  
+Google Cloud Service Account Key - https://cloud.google.com/iam/docs/creating-managing-service-account-keys  
 
 The `requirements.txt` file lists all Python dependencies, and they should be installed using:
 
