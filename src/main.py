@@ -97,9 +97,8 @@ def scan(xboxContM):
 
     global m_scan, ext_flag
 
-    os.system("gnome-terminal -- python scanner.py")
+    #os.system("gnome-terminal -- python scanner.py")
     
-    """
     # Run document scanning
     with concurrent.futures.ThreadPoolExecutor() as executor:
         future = executor.submit(scanner.run,)
@@ -111,7 +110,7 @@ def scan(xboxContM):
     else:
         # Scan unsuccessful
         audio.go("key", "main_010")
-    """
+
     m_scan = False
 
     return
@@ -241,7 +240,7 @@ def guisett(key, val):
     
 if __name__ == '__main__':
 
-    #audio.go("key", "main_001")
+    audio.go("key", "main_001")
     
     # Declare and initialise 
     global back, select, path, ext_flag, load_flag, path, pointer_ud, pointer_lr, m_scan, m_extract, m_access, m_access_old
@@ -273,7 +272,7 @@ if __name__ == '__main__':
 
     xboxContM.start()
 
-    #audio.go("key", "main_002")
+    audio.go("key", "main_002")
 
     # System begins operation
     while back == False:
@@ -294,5 +293,5 @@ if __name__ == '__main__':
 
     # System shuts down
     audio.go("key", "main_004")
-    #p.terminate()
+    p.terminate()
     xboxContM.stop()

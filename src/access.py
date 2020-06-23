@@ -99,13 +99,6 @@ def CallBackA(controlId, value):
             pointer_lr[0] = pointer_lr[1]
             pointer_lr[1] = pointer_lr[1] + 1
 
-    # Stop program (BACK)
-    if controlId == 12 and value == 0:
-        guisett("back","green")
-        time.sleep(0.2)
-        guisett("back","red")
-        back = True
-
     # Add Notes (XBOX)
     if controlId == 8 and value == 0:
         guisett("xbox","green")
@@ -131,6 +124,13 @@ def CallBackA(controlId, value):
             ignore = True
             pointer_ud[1] = 0
             audio.go("key", "access_009")
+
+    # Stop program (BACK)
+    if controlId == 12 and value == 0:
+        guisett("back","green")
+        time.sleep(0.2)
+        guisett("back","red")
+        back = True
 
     return
 
@@ -364,9 +364,6 @@ def tables(path):
     for n, r in enumerate(data[0]):
         c_heading.append(data[0][n])
         r_heading.append(data[n][0])
-
-    #for n, r in enumerate(data):
-    #    r_heading.append(data[n][0])
 
     voice = "There are " + str(cols) + " columns and " + str(rows) + " rows in this table. Please note that the columns are assumed to be the headings. Use the up and down directions on the Dpad to select each item. If you would like to swap the rows with columns, press down the right joystick."
     audio.go("raw", voice)
@@ -675,6 +672,13 @@ def begin(path):
     xboxContA.start()
 
     audio.go("key", "access_008")
+
+    audio.go("key", "access_008")
+    audio.go("key", "access_001")
+    audio.go("key", "access_002")
+    audio.go("key", "access_003")
+    audio.go("key", "access_004")
+    audio.go("key", "access_035")
 
     while back == False:
 

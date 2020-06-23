@@ -11,7 +11,7 @@ import json
 with open('standard.JSON', 'r') as f:
         data = dict(json.load(f))
 
-api_key = data["keys"][0]["camelot"]
+api_key = data["keys"][0]["camelotpro"]
 
 def get(info):
 

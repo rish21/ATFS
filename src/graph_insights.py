@@ -17,8 +17,8 @@ path = 'temp/csv/'
 def smoothList(list):
 
     # Moving average filter
-    strippedXs=False
-    degree=5
+    strippedXs = False
+    degree = 5
 
     if strippedXs == True:
         return Xs[0:-(len(list)-(len(list)-degree+1))]
@@ -33,8 +33,8 @@ def smoothList(list):
 def smoothListTriangle(list):
 
     # Averaging triangular filter
-    strippedXs=False
-    degree=5
+    strippedXs = False
+    degree = 5
     weight = []
     window = len(list)
     smoothed = [0.0]*(len(list)-window)
@@ -52,8 +52,8 @@ def smoothListTriangle(list):
 def smoothListGaussian(list):
 
     # Gaussian filter
-    strippedXs=False
-    degree=5
+    strippedXs = False
+    degree = 5
     window = degree*2-1
     weight = np.array([1.0]*window)
     weightGauss = []
@@ -123,9 +123,8 @@ def graph_values(data):
     vy = []
 
     for d in data:
-        if float(d[1]) <= 25:
-            vx.append(d[0])
-            vy.append(d[1])
+        vx.append(d[0])
+        vy.append(d[1])
         
     x = np.array(vx, dtype=np.float128)
     y = np.array(vy, dtype=np.float128)
@@ -133,21 +132,21 @@ def graph_values(data):
     return x, y
 
 
-def sg_filter(x, y, n):
+def sg_filter(xx, yy, n):
 
     # Savitzky–Golay filter
-    win_len = len(y)
+    win_len = len(yy)
     win_len = int(win_len / 2)
     if (win_len % 2) == 0:
         win_len = win_len -1
 
-    fx = savgol_filter(x, win_len, 1)
-    fy = savgol_filter(y, win_len, 1)
+    fx = savgol_filter(xx, win_len, 1)
+    fy = savgol_filter(yy, win_len, 1)
 
     fx = np.around(fx,decimals=5)
-    fy = np.around(fx,decimals=2)
+    fy = np.around(fy,decimals=5)
 
-    data = np.column_stack((x, fy))
+    data = np.column_stack((xx, fy))
 
     np.savetxt(path + str(n) + '.csv', data, delimiter=' ', fmt='%f')
 
@@ -326,20 +325,19 @@ def get():
             valx, valy = graph_values(data)
             #plt.plot(valx, valy, 'o', color ='C0', label ="Raw Data", markersize=2) 
 
+            
             x, y = sg_filter(valx, valy, n)
             #plt.plot(valx, y, 'o', color ='C1', label ="Savgol Filter", markersize=2) 
-            
             """
             y = smoothList(valy)
             plt.plot(x[:len(y)], y, 'o', color ='C2', label ="Average Filter", markersize=2) 
-
+            
             y = smoothListTriangle(valy)
             plt.plot(x[:len(y)], y, 'o', color ='C3', label ="Triangle Filter", markersize=2) 
 
             y = smoothListGaussian(valy)
-            plt.plot(x[:len(y)], y, 'o', color ='C4', label ="Gaussian Filter", markersize=2) 
+            plt.plot(x[:len(y)], y, 'o', color ='C4', label ="Gaussian Filter", markersize=2)
             """
-            
             #plt.legend() 
             #plt.show() 
 
