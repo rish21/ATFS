@@ -113,7 +113,7 @@ def run():
         # A 60% threshold is used here
         page_area = int(maxHeight * maxLen)
         perc_limit = int((vidw * vidl) * 0.95)
-        perc_aim = int((vidw * vidl) * 0.6)
+        perc_aim = int((vidw * vidl) * 0.75)
 
         # Save the images that need to be used further based on area percentage
         # Give feedback if the page has been found, too far away, or if it cannot be found
