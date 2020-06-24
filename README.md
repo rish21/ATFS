@@ -35,7 +35,7 @@ pip install -r requirements.txt
 
 _Video Feed_  
 
-Please your camera footage in the `src/temp` directory and ensure that the 'camera' value in the `src/standard.JSON` file is set to `False`.
+Please your camera footage in the `src/temp` directory and name it `feed.mp4`. Then ensure that the 'camera' value in the `src/standard.JSON` file is set to `False`.
 
 _WebCam Feed_  
 

@@ -25,10 +25,11 @@ def run():
         cap = cv2.VideoCapture(0)
         cap.set(10,160)
 
-    vidw = 640
-    vidl = 480
+    vidw = 1920
+    vidl = 1080
     cont = True
     consistent = 0
+    inst = False
 
     while cont:
         # Use video feed
@@ -111,12 +112,12 @@ def run():
         # Calculate current area and target area
         # A 60% threshold is used here
         page_area = int(maxHeight * maxLen)
-        perc = int(vidw * vidl)
+        perc_limit = int((vidw * vidl) * 0.95)
         perc_aim = int((vidw * vidl) * 0.6)
 
         # Save the images that need to be used further based on area percentage
         # Give feedback if the page has been found, too far away, or if it cannot be found
-        if page_area >= perc_aim and page_area < perc:
+        if page_area >= perc_aim and page_area <= perc_limit:
             consistent = consistent + 1
             time.sleep(0.01)
             if consistent == 100:
@@ -129,18 +130,20 @@ def run():
                 cv2.destroyAllWindows()
                 audio.go("key", "scanner_002")
                 cont = False
-        elif page_area <= perc_aim and time.time() - start >= 5:
+        elif page_area <= perc_aim and time.time() - start >= 5 and inst == False:
             # Document is too small 
             consistent = 0
             p = Process(target = audio.go, args = ("key", "scanner_003"))
             p.daemon = True
             p.start()
-        else:   
+            inst = True
+        elif inst == False:   
             # Document cannot be found
             consistent = 0
             p = Process(target = audio.go, args = ("key", "scanner_004"))
             p.daemon = True
             p.start()
+            inst = True
 
 
         # Close all windows with any keyboard press
