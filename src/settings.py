@@ -197,6 +197,7 @@ def speakrate(path):
 
 def guisett(key, val):
 
+    # Set GUI LED/Text
     with open('gui.JSON', 'r') as f:
         data = dict(json.load(f))
     
@@ -223,6 +224,7 @@ def begin(path):
 
     guisett("loc","settings")
 
+    # Initialise new instance for new set of controls
     xboxContS = XboxController.XboxController(
         controllerCallBack = CallBackS,
         joystickNo = 0,
@@ -238,7 +240,7 @@ def begin(path):
     audio.go("key", "access_031")
     audio.go("key", "access_033")
 
-    # System begins operation
+    # Run
     while back == False:
 
         if s_window == True:

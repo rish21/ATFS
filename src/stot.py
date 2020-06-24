@@ -34,6 +34,7 @@ def get():
 
 def guisett(key, val):
 
+	# Set GUI LED/Text
     with open('gui.JSON', 'r') as f:
         data = dict(json.load(f))
     

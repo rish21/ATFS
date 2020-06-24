@@ -15,6 +15,7 @@ def run():
     print("pkg_SCANNER - Scanning Page")
     start = time.time()
 
+    # Set feed input
     with open('standard.JSON', 'r') as f:
         data = dict(json.load(f))
 

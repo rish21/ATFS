@@ -305,7 +305,7 @@ def store_json(results):
     return
 
 
-def get():
+def get(plot_show):
 
     print("pkg_GRAPH_INSIGHTS - Getting insights for graphs")
 
@@ -323,25 +323,23 @@ def get():
                 data = list(im)
 
             valx, valy = graph_values(data)
-            #plt.plot(valx, valy, 'o', color ='C0', label ="Raw Data", markersize=2) 
-
-            
             x, y = sg_filter(valx, valy, n)
-            #plt.plot(valx, y, 'o', color ='C1', label ="Savgol Filter", markersize=2) 
-            """
-            y = smoothList(valy)
-            plt.plot(x[:len(y)], y, 'o', color ='C2', label ="Average Filter", markersize=2) 
             
-            y = smoothListTriangle(valy)
-            plt.plot(x[:len(y)], y, 'o', color ='C3', label ="Triangle Filter", markersize=2) 
+            #y = smoothList(valy)
+            #y = smoothListTriangle(valy)
+            #y = smoothListGaussian(valy)
 
-            y = smoothListGaussian(valy)
-            plt.plot(x[:len(y)], y, 'o', color ='C4', label ="Gaussian Filter", markersize=2)
-            """
-            #plt.legend() 
-            #plt.show() 
+            # Plot
+            if plot_show == True:
+                plt.plot(valx, valy, 'o', color ='C0', label ="Raw Data", markersize=2) 
+                plt.plot(valx, y, 'o', color ='C1', label ="Savgol Filter", markersize=2) 
+                plt.plot(x[:len(y)], y, 'o', color ='C2', label ="Average Filter", markersize=2) 
+                plt.plot(x[:len(y)], y, 'o', color ='C3', label ="Triangle Filter", markersize=2) 
+                plt.plot(x[:len(y)], y, 'o', color ='C4', label ="Gaussian Filter", markersize=2)
+                plt.legend() 
+                plt.show() 
 
-            results.append(best_fit(False, valx, valy))
+            results.append(best_fit(plot_show, valx, valy))
                     
         store_json(results)
 
@@ -351,5 +349,5 @@ def get():
 
 if __name__ == '__main__':
 
-    get()
+    get(False)
 

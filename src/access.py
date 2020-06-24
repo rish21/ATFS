@@ -139,6 +139,7 @@ def settings_(path):
 
     global a_settings
 
+    # Access the settings menu
     with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(settings.begin, path)
     audio.go("key", "access_008")
@@ -156,7 +157,7 @@ def graphs(path):
     
     #audio.go("key", "access_010")
     
-    # Select 
+    # Select type
     while select == False and back == False:
         if pointer_lr[1] == 0 and pointer_lr[0] != pointer_lr[1]:
             audio.go("key", "access_011")
@@ -310,6 +311,7 @@ def images(path):
     pointer_ud[1] = -1
     prev_point = pointer_ud[1]
 
+    # Image descriptions
     with open(path + '/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
@@ -352,6 +354,7 @@ def tables(path):
     c_heading = []
     r_heading = []
 
+    # Tables
     table_path = path + "/csv/tables/tables-page-1-table-1.csv"
 
     with open(table_path, newline='') as csvfile:
@@ -416,6 +419,7 @@ def notes(path):
 
     audio.go("key", "access_015")
 
+    # Select add or hear
     while select == False and back == False:
         if pointer_lr[1] == 0 and pointer_lr[0] != pointer_lr[1]:
             audio.go("key", "access_017")
@@ -491,6 +495,7 @@ def equations(path):
     pointer_ud[1] = -1
     prev_point = pointer_ud[1]
 
+    # Equations
     with open(path + '/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
@@ -530,6 +535,7 @@ def text(path):
     pointer_ud[1] = -1
     prev_point = pointer_ud[1]
 
+    # Text 
     with open(path + '/access.JSON', 'r') as f:
         data = dict(json.load(f))
 
@@ -633,6 +639,7 @@ def text(path):
 
 def guisett(key, val):
 
+    # Set GUI LED/Text
     with open('gui.JSON', 'r') as f:
         data = dict(json.load(f))
     
@@ -662,6 +669,7 @@ def begin(path):
 
     guisett("loc","access")
 
+    # Initialise new instance for new set of controls
     xboxContA = XboxController.XboxController(
         controllerCallBack = CallBackA,
         joystickNo = 0,
@@ -680,6 +688,7 @@ def begin(path):
     audio.go("key", "access_004")
     audio.go("key", "access_035")
 
+    # Run
     while back == False:
 
         if a_graphs == True:

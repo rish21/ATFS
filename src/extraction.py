@@ -59,7 +59,7 @@ def run():
         #audio.go("key", "extraction_002")
 
         # Step 5 - Get insights for graph trends extracted
-        graph_insights.get()
+        graph_insights.get(info)
         print('Graph desc - It took', time.time()-start, 'seconds.')
         start = time.time()
 
@@ -104,7 +104,7 @@ def store():
     folder_no = len(next(os.walk(path))[1])
     path = path + str(folder_no)
 
-    # Store extracted document
+    # Store extracted document to library
     os.mkdir(path)
 
     shutil.copy("temp/access.JSON", path)
