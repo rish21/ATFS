@@ -16,7 +16,8 @@
         {
             "window": 2,
             "gender": "female",
-            "speaking_rate": 1.1
+            "speaking_rate": 1.0,
+            "camera" : "False"
         }
     ],
     "keys": [

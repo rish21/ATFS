@@ -6,6 +6,7 @@ import numpy as np
 import cv2
 import time
 import audio
+import json
 from multiprocessing import Process
 
 
@@ -13,23 +14,24 @@ def run():
 
     print("pkg_SCANNER - Scanning Page")
     start = time.time()
-    
-    #cap = cv2.VideoCapture(0)
-    cap = cv2.VideoCapture('temp/feed.mp4')
-    #cap.set(10,160)
-    #imgw = 600
-    #imgl = 800
+
+    with open('standard.JSON', 'r') as f:
+        data = dict(json.load(f))
+
+    if data["settings"][0]["camera"] == "False":
+        cap = cv2.VideoCapture('temp/feed.mp4')
+    elif data["settings"][0]["camera"] == "True":
+        cap = cv2.VideoCapture(0)
+        cap.set(10,160)
+
     vidw = 640
     vidl = 480
     cont = True
     consistent = 0
 
     while cont:
-        # Use live video feed
+        # Use video feed
         ret, frame = cap.read()
-
-        # Use image 
-        #image = cv2.imread("images/1.jpg", 1)
 
         # Resize the image into a processable size 
         #image = cv2.resize(image,(imgw,imgl)) # Image
@@ -107,13 +109,13 @@ def run():
 
         # Calculate current area and target area
         # A 60% threshold is used here
-        page_area = maxHeight * maxLen
-        #perc_aim = (imgw * imgl) * 0.6
+        page_area = int(maxHeight * maxLen)
+        perc = int(vidw * vidl)
         perc_aim = int((vidw * vidl) * 0.6)
 
         # Save the images that need to be used further based on area percentage
         # Give feedback if the page has been found, too far away, or if it cannot be found
-        if page_area >= perc_aim:
+        if page_area >= perc_aim and page_area < perc:
             consistent = consistent + 1
             time.sleep(0.01)
             if consistent == 100:

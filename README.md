@@ -11,11 +11,11 @@
 
 ##### ABSTRACT
 
-The WHO reports with confidence that there are currently over 2 billion people in the world who have some form of visual impairment or blindness. Over 30 million have severe impairment and over 1 million of those are children under the age of 15. These individuals face several unprecedented challenges, one these being education. Advances in hardware and software have paved the way for many solutions both simple and complex; from text enlargers to braille translation devices. However, these solutions are not adequate for students wishing to study more complex STEM subjects. Interpreting information with items such as graphs and tables is extremely difficult. This problem is further heightened, as much of the national curriculum still uses dated non-digital paper material; resources and equipment have also become exceedingly expensive and made it difficult for enough teachers to be properly trained. This project tackled this problem by developing a system that incorporated computer vision and machine learning technologies, to enable students to study and pursue a passion for STEM subjects. It scans the literature of interest and extracts all the information present within it. Graphs, tables, images, equations and text are all converted into speech or audio that can be interpreted and understood by the student. They can navigate a virtual interface using a joystick controller to access all this information. User testing proved that this system was effective at extracting and presenting the information to the user, enabling them to study and answers questions from the material. The simple intuitive virtual interface also made it quick and easy to learn and train students and teachers; all while being considerably cheaper than current solutions and methods. 
+The WHO reports with confidence that there are currently over 2 billion people in the world who have some form of visual impairment or blindness. Over 30 million have severe impairment and over 1 million of those are children under the age of 15. These individuals face several unprecedented challenges, one these being education. Advances in hardware and software have paved the way for many solutions both simple and complex; from text enlargers to braille translation devices. However, these solutions are not adequate for students wishing to study more complex STEM subjects. Interpreting information with items such as graphs and tables is extremely difficult. This problem is further heightened, as much of the national curriculum still uses dated non-digital paper material; resources and equipment have also become exceedingly expensive and made it difficult for enough teachers to be properly trained. This project tackled this problem by developing a system that incorporated computer vision and machine learning technologies, to enable students to study and pursue a passion for STEM subjects. It scans the literature of interest and extracts all the information present within it. Graphs, tables, images, equations and text are all converted into speech or audio that can be interpreted and understood by the student. They can navigate a virtual interface using a joystick controller to access all this information. User testing proved that this system was effective at extracting and presenting the information to the user, enabling them to study and answers questions from the material. This simple intuitive virtual interface also made it quick and easy to learn and train students and teachers; all while being considerably cheaper than current solutions and methods. 
 
 ##### Requirements
 
-Python3.6 and an Xbox 360 Controller are **necessary** to run and operate this system.
+Python3.6 and an Xbox 360 Controller are ***necessary*** to run and operate this system.
 
 Please place your Google Cloud Service Account Key within `src` and place your the file name, Mathpix and ExtractTable/CamelotPro IDD and Key within the `src/standard.JSON` file.
 
@@ -30,6 +30,16 @@ The `requirements.txt` file lists all Python dependencies, and they should be in
 ```python
 pip install -r requirements.txt
 ```
+
+##### Setup 
+
+_Video Feed_  
+
+Please your camera footage in the `src/temp` directory and ensure that the 'camera' value in the `src/standard.JSON` file is set to `False`.
+
+_WebCam Feed_  
+
+Please ensure that the 'camera' value in the `src/standard.JSON` file is set to `True` and that the webcam is connected to the PC.
 
 ##### Run
 
@@ -46,4 +56,4 @@ The raw outputs from the examples used in the final report in the Testing Sectio
 
 ###### Notes
 
-+ The repository contains some additional files and code that are related the presentation given for this project
++ The repository contains some additional files and code that are related the presentation that was given for this project
