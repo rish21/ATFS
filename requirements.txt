@@ -45,7 +45,7 @@ python-dateutil==2.8.1
 python-mathpix==0.4
 pytz==2020.1
 requests==2.23.0
-rsa==4.0
+rsa==4.1
 s3transfer==0.3.3
 scipy==1.4.1
 selenium==3.141.0
