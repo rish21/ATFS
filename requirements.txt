@@ -54,4 +54,4 @@ smart-open==2.0.0
 sortedcontainers==2.1.0
 soupsieve==2.0.1
 SpeechRecognition==3.8.1
-urllib3==1.25.9
+urllib3==1.26.5
