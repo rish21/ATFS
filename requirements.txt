@@ -39,7 +39,7 @@ pycryptodome==3.9.7
 pydub==0.24.0
 pygame==1.9.6
 pyparsing==2.4.7
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 pytesseract==0.3.4
 python-dateutil==2.8.1
 python-mathpix==0.4
